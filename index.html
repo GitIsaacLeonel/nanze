@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-/* ── TOKENS ──────────────────────────────────────────────── */
 :root {
   --bg:      #FAFAF9;
   --surface: #F5F5F3;
@@ -23,7 +22,6 @@
   --ff-mono: 'JetBrains Mono', monospace;
 }
 
-/* ── RESET ───────────────────────────────────────────────── */
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 html  { scroll-behavior: smooth; }
 body  {
@@ -111,9 +109,7 @@ nav {
   width: min(400px,65vw); height: min(400px,65vw);
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
   background: radial-gradient(ellipse at 40% 38%, #9966CC 0%, #6B4C9A 45%, #E8E8E6 100%);
-  animation: orb-morph 10s ease-in-out infinite,
-             orb-glow   5s ease-in-out infinite,
-             orb-color 10s ease-in-out infinite;
+  animation: orb-morph 10s ease-in-out infinite, orb-glow 5s ease-in-out infinite, orb-color 10s ease-in-out infinite;
 }
 @keyframes orb-morph {
   0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
@@ -213,7 +209,7 @@ nav {
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  gap: 32px; max-width: 1400px; margin: 0 auto;
+  gap: 32px; max-width: 1400px; margin: 0 auto 60px;
 }
 .product-card {
   background: var(--surface);
@@ -231,7 +227,6 @@ nav {
   box-shadow: 0 12px 32px rgba(0,0,0,.12);
 }
 
-/* bottle stage */
 .bottle-stage {
   position: relative;
   display: flex; align-items: flex-end; justify-content: center;
@@ -249,7 +244,6 @@ nav {
 .gt { background: var(--teal); }
 .gp { background: var(--pink); }
 
-/* bottle SVG sizing and animations */
 .bottle { height: 200px; width: auto; display: block; }
 
 @keyframes fv { 0%,100%{ transform: translateY(0);          } 50%{ transform: translateY(-8px);          } }
@@ -268,7 +262,6 @@ nav {
 .product-card:hover .bf { filter: drop-shadow(0 0 22px rgba(0,168,159,.35)); }
 .product-card:hover .be { filter: drop-shadow(0 0 22px rgba(233,30,99,.35)); }
 
-/* product text */
 .product-info { text-align: center; display: flex; flex-direction: column; gap: 8px; }
 .p-label {
   font-family: var(--ff-mono); font-size: 9px; letter-spacing: .3em;
@@ -281,7 +274,6 @@ nav {
 .p-notes { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.5; }
 .p-price { font-family: var(--ff-disp); font-size: 16px; font-weight: 500; color: var(--text); }
 
-/* CTA hidden, slides up on hover */
 .btn-add {
   background: transparent;
   border: 1px solid rgba(153,102,204,.3); border-radius: 100px;
@@ -294,6 +286,29 @@ nav {
 .product-card:hover .btn-add { opacity: 1; transform: translateY(0); }
 .btn-add:hover { border-color: var(--violet); color: var(--violet); }
 @media (hover: none) { .btn-add { opacity: 1; transform: none; } }
+
+/* ── PAGINATION ──────────────────────────────────────────── */
+.pagination-wrap {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin-top: 60px;
+}
+.pagination-info {
+  font-family: var(--ff-mono); font-size: 11px; letter-spacing: .1em;
+  color: var(--muted);
+}
+.pagination-btn {
+  background: var(--surface); border: 1px solid rgba(0,0,0,.1);
+  border-radius: 6px; padding: 10px 16px;
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--text); cursor: pointer;
+  transition: all .3s;
+}
+.pagination-btn:hover:not(:disabled) {
+  border-color: var(--violet); background: rgba(153,102,204,.08);
+}
+.pagination-btn:disabled {
+  opacity: .3; cursor: not-allowed;
+}
 
 /* ── MANIFESTO ───────────────────────────────────────────── */
 #manifesto {
@@ -458,282 +473,15 @@ footer {
 <!-- COLLECTION -->
 <section id="collection" aria-labelledby="col-title">
   <span class="section-eyebrow reveal" id="col-title">01 — Collection</span>
-  <div class="collection-grid">
+  <div class="collection-grid" id="productGrid"></div>
 
-    <!-- ── VOID ── -->
-    <article class="product-card reveal d1">
-      <div class="bottle-stage">
-        <div class="bottle-glow gv"></div>
-        <svg class="bottle bv" viewBox="0 0 72 218" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="vBody" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stop-color="#2A2A3A"/>
-              <stop offset="100%" stop-color="#1A1A28"/>
-            </linearGradient>
-            <linearGradient id="vStreak" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#9966CC" stop-opacity=".7"/>
-              <stop offset="45%"  stop-color="#9966CC" stop-opacity=".15"/>
-              <stop offset="100%" stop-color="#9966CC" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="vShine" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#fff" stop-opacity=".08"/>
-              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="vCap" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#252530"/>
-              <stop offset="100%" stop-color="#16161F"/>
-            </linearGradient>
-          </defs>
-          <rect x="1" y="1" width="70" height="20" rx="1.5" fill="url(#vCap)" stroke="#B8972A" stroke-width=".5"/>
-          <rect x="4" y="4" width="64" height="2" rx=".5" fill="#fff" fill-opacity=".04"/>
-          <rect x="10" y="18" width="52" height="6" fill="#0E0E1C"/>
-          <path d="M 4,24 L 55,24 L 70,39 L 70,212 L 4,212 Z" fill="url(#vBody)" stroke="#B8972A" stroke-width=".5"/>
-          <path d="M 4,24 L 19,24 L 19,212 L 4,212 Z" fill="url(#vStreak)"/>
-          <path d="M 4,24 L 13,24 L 13,212 L 4,212 Z" fill="url(#vShine)"/>
-          <path d="M 63,39 L 70,39 L 70,212 L 63,212 Z" fill="#3D0066" fill-opacity=".72"/>
-          <path d="M 63,39 L 66,39 L 66,212 L 63,212 Z" fill="#9900DD" fill-opacity=".25"/>
-          <rect x="9" y="88" width="47" height="80" rx="1" fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".07" stroke-width=".3"/>
-          <text x="33" y="143" font-family="monospace" font-size="20" fill="none" stroke="#fff" stroke-width=".75" stroke-opacity=".55" text-anchor="middle" dominant-baseline="middle">N</text>
-          <text x="33" y="161" font-family="monospace" font-size="6.5" fill="#fff" fill-opacity=".45" text-anchor="middle" letter-spacing="3.5">VOID</text>
-          <line x1="4" y1="211" x2="70" y2="211" stroke="#B8972A" stroke-opacity=".5" stroke-width=".3"/>
-          <line x1="4.3" y1="24" x2="4.3" y2="212" stroke="#fff" stroke-opacity=".1" stroke-width=".4"/>
-          <line x1="55" y1="24" x2="70" y2="39" stroke="#B8972A" stroke-width=".5"/>
-        </svg>
-      </div>
-      <div class="product-info">
-        <span class="p-label">Formula 01 · 50 ML</span>
-        <h3 class="p-name">NANZE VOID</h3>
-        <p class="p-notes">Dark amber · Smoked oud · Iron mineral</p>
-        <p class="p-price">€185</p>
-      </div>
-      <button class="btn-add" data-name="NANZE VOID" data-price="185">Add to Cart</button>
-    </article>
-
-    <!-- ── FLUX ── -->
-    <article class="product-card reveal d2">
-      <div class="bottle-stage">
-        <div class="bottle-glow gt"></div>
-        <svg class="bottle bf" viewBox="0 0 96 236" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <radialGradient id="fGlow" cx="50%" cy="43%" r="50%">
-              <stop offset="0%"   stop-color="#00A89F" stop-opacity=".45"/>
-              <stop offset="38%"  stop-color="#0A3050" stop-opacity=".55"/>
-              <stop offset="100%" stop-color="#050525" stop-opacity=".75"/>
-            </radialGradient>
-            <radialGradient id="fGlow2" cx="35%" cy="33%" r="42%">
-              <stop offset="0%"   stop-color="#fff" stop-opacity=".15"/>
-              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="fCap" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stop-color="#00A89F"/>
-              <stop offset="100%" stop-color="#E91E63"/>
-            </linearGradient>
-            <linearGradient id="fCapS" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#fff" stop-opacity=".28"/>
-              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="fNeck" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#0A1A28"/>
-              <stop offset="100%" stop-color="#081320"/>
-            </linearGradient>
-            <pattern id="fScan" x="0" y="0" width="96" height="4" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="96" y2="0" stroke="#fff" stroke-width=".45" stroke-opacity=".06"/>
-            </pattern>
-          </defs>
-          <ellipse cx="48" cy="21" rx="19" ry="21" fill="url(#fCap)" opacity=".88"/>
-          <path d="M 29,21 C 29,0 67,0 67,21" fill="url(#fCapS)"/>
-          <ellipse cx="42" cy="13" rx="6" ry="4" fill="#fff" fill-opacity=".26" transform="rotate(-12,42,13)"/>
-          <path d="M 38,39 L 40,58 L 56,58 L 58,39 Z" fill="url(#fNeck)"/>
-          <line x1="38" y1="39" x2="40" y2="58" stroke="#00A89F" stroke-opacity=".28" stroke-width=".4"/>
-          <line x1="58" y1="39" x2="56" y2="58" stroke="#00A89F" stroke-opacity=".28" stroke-width=".4"/>
-          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z" fill="url(#fGlow)"/>
-          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z" fill="url(#fGlow2)"/>
-          <rect x="0" y="56" width="96" height="168" fill="url(#fScan)"/>
-          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222" stroke="#00A89F" stroke-opacity=".3" stroke-width=".8" fill="none"/>
-          <text x="48" y="148" font-family="monospace" font-size="18" fill="none" stroke="#00A89F" stroke-width=".75" stroke-opacity=".65" text-anchor="middle" dominant-baseline="middle">N</text>
-          <text x="48" y="165" font-family="monospace" font-size="6.5" fill="#00A89F" fill-opacity=".65" text-anchor="middle" letter-spacing="3.5">FLUX</text>
-        </svg>
-      </div>
-      <div class="product-info">
-        <span class="p-label">Formula 02 · 50 ML</span>
-        <h3 class="p-name">NANZE FLUX</h3>
-        <p class="p-notes">White musk · Frozen violet · Ozone</p>
-        <p class="p-price">€185</p>
-      </div>
-      <button class="btn-add" data-name="NANZE FLUX" data-price="185">Add to Cart</button>
-    </article>
-
-    <!-- ── ECHO ── -->
-    <article class="product-card reveal d3">
-      <div class="bottle-stage">
-        <div class="bottle-glow gp"></div>
-        <svg class="bottle be" viewBox="0 0 88 228" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="eBody" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#1A0A10"/>
-              <stop offset="100%" stop-color="#22091A"/>
-            </linearGradient>
-            <linearGradient id="ePink" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#E91E63" stop-opacity=".52"/>
-              <stop offset="45%"  stop-color="#E91E63" stop-opacity=".14"/>
-              <stop offset="100%" stop-color="#E91E63" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="eShine" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#fff" stop-opacity=".09"/>
-              <stop offset="40%"  stop-color="#fff" stop-opacity=".03"/>
-              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="eCap" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stop-color="#2C0A1C"/>
-              <stop offset="100%" stop-color="#140610"/>
-            </linearGradient>
-            <linearGradient id="eCapT" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stop-color="#3C1028"/>
-              <stop offset="100%" stop-color="#1C0814"/>
-            </linearGradient>
-          </defs>
-          <rect x="16" y="10" width="54" height="24" fill="url(#eCap)"/>
-          <polygon points="16,10 70,10 76,4 22,4" fill="url(#eCapT)"/>
-          <polygon points="70,10 76,4 76,28 70,34" fill="#0C040A" fill-opacity=".9"/>
-          <polygon points="16,10 70,10 76,4 22,4" stroke="#E91E63" stroke-opacity=".35" stroke-width=".4" fill="none"/>
-          <rect x="16" y="10" width="54" height="24" stroke="#E91E63" stroke-opacity=".3" stroke-width=".4" fill="none"/>
-          <polygon points="70,10 76,4 76,28 70,34" stroke="#E91E63" stroke-opacity=".25" stroke-width=".4" fill="none"/>
-          <line x1="19" y1="13" x2="67" y2="13" stroke="#fff" stroke-opacity=".12" stroke-width=".4"/>
-          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z" fill="url(#eBody)"/>
-          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z" fill="url(#ePink)"/>
-          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z" fill="url(#eShine)"/>
-          <line x1="16" y1="98"  x2="80" y2="106" stroke="#E91E63" stroke-opacity=".22" stroke-width=".6"/>
-          <line x1="16" y1="98.6" x2="80" y2="106.6" stroke="#fff" stroke-opacity=".05" stroke-width=".3"/>
-          <line x1="16" y1="146" x2="78" y2="153" stroke="#E91E63" stroke-opacity=".18" stroke-width=".6"/>
-          <line x1="16" y1="146.6" x2="78" y2="153.6" stroke="#fff" stroke-opacity=".04" stroke-width=".3"/>
-          <path d="M 70,34 C 74,62 82,92 82,130 C 82,168 74,200 60,218" stroke="#E91E63" stroke-opacity=".38" stroke-width=".9" fill="none"/>
-          <line x1="16.4" y1="34" x2="16.4" y2="218" stroke="#fff" stroke-opacity=".1" stroke-width=".4"/>
-          <path d="M 43,148 L 44.8,153 L 43,158 L 41.2,153 Z M 37,153 L 42,151.5 L 49,153 L 42,154.5 Z" fill="#E91E63" fill-opacity=".65"/>
-          <text x="43" y="170" font-family="monospace" font-size="6.5" fill="#E91E63" fill-opacity=".6" text-anchor="middle" letter-spacing="3.5">ECHO</text>
-          <line x1="16" y1="218" x2="60" y2="218" stroke="#E91E63" stroke-opacity=".28" stroke-width=".4"/>
-        </svg>
-      </div>
-      <div class="product-info">
-        <span class="p-label">Formula 03 · 50 ML</span>
-        <h3 class="p-name">NANZE ECHO</h3>
-        <p class="p-notes">Bergamot vapor · Silver cedar · Static rain</p>
-        <p class="p-price">€185</p>
-      </div>
-      <button class="btn-add" data-name="NANZE ECHO" data-price="185">Add to Cart</button>
-    </article>
-
-    <!-- ── VEIL ── -->
-    <article class="product-card reveal d4">
-      <div class="bottle-stage">
-        <div class="bottle-glow gv"></div>
-        <svg class="bottle bv" viewBox="0 0 68 224" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="veilBody" x1=".5" y1="0" x2=".5" y2="1">
-              <stop offset="0%"   stop-color="#3A2A4A"/>
-              <stop offset="60%"  stop-color="#2A1A3A"/>
-              <stop offset="100%" stop-color="#1A0A2A"/>
-            </linearGradient>
-            <linearGradient id="veilGlow" x1="0" y1=".5" x2="1" y2=".5">
-              <stop offset="0%"   stop-color="#9966CC" stop-opacity="0"/>
-              <stop offset="50%"  stop-color="#9966CC" stop-opacity=".35"/>
-              <stop offset="100%" stop-color="#9966CC" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <ellipse cx="34" cy="16" rx="16" ry="18" fill="#1A1A28" stroke="#B8972A" stroke-width=".4"/>
-          <rect x="18" y="30" width="32" height="8" fill="#0E0E1C"/>
-          <path d="M 8,40 L 8,210 Q 8,220 18,224 L 50,224 Q 60,220 60,210 L 60,40 Z" fill="url(#veilBody)" stroke="#888" stroke-opacity=".15" stroke-width=".4"/>
-          <path d="M 8,40 L 8,210 Q 8,220 18,224 L 50,224 Q 60,220 60,210 L 60,40 Z" fill="url(#veilGlow)"/>
-          <ellipse cx="15" cy="120" rx="2.5" ry="40" fill="#fff" fill-opacity=".04"/>
-          <text x="34" y="152" font-family="monospace" font-size="18" fill="none" stroke="#9966CC" stroke-width=".7" stroke-opacity=".5" text-anchor="middle" dominant-baseline="middle">N</text>
-          <text x="34" y="169" font-family="monospace" font-size="6.5" fill="#9966CC" fill-opacity=".55" text-anchor="middle" letter-spacing="3">VEIL</text>
-        </svg>
-      </div>
-      <div class="product-info">
-        <span class="p-label">Formula 04 · 50 ML</span>
-        <h3 class="p-name">NANZE VEIL</h3>
-        <p class="p-notes">Sandalwood · Patchouli · Musk</p>
-        <p class="p-price">€185</p>
-      </div>
-      <button class="btn-add" data-name="NANZE VEIL" data-price="185">Add to Cart</button>
-    </article>
-
-    <!-- ── EMBER ── -->
-    <article class="product-card reveal d5">
-      <div class="bottle-stage">
-        <div class="bottle-glow gp"></div>
-        <svg class="bottle bf" viewBox="0 0 80 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="emberBody" x1="0" y1=".5" x2="1" y2=".5">
-              <stop offset="0%"   stop-color="#1A0A10"/>
-              <stop offset="50%"  stop-color="#2A1A28"/>
-              <stop offset="100%" stop-color="#1A0A10"/>
-            </linearGradient>
-            <linearGradient id="emberFire" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#E91E63" stop-opacity=".4"/>
-              <stop offset="50%"  stop-color="#E91E63" stop-opacity=".1"/>
-              <stop offset="100%" stop-color="#E91E63" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <path d="M 18,8 L 62,8 L 68,16 L 68,28 L 12,28 L 12,16 Z" fill="#0E0E1C"/>
-          <polygon points="18,8 62,8 60,2 20,2" fill="#1A1A28" stroke="#B8972A" stroke-opacity=".3" stroke-width=".3"/>
-          <path d="M 12,28 L 12,210 Q 12,218 20,220 L 60,220 Q 68,218 68,210 L 68,28 Z" fill="url(#emberBody)" stroke="#E91E63" stroke-opacity=".2" stroke-width=".3"/>
-          <path d="M 12,28 L 12,210 Q 12,218 20,220 L 60,220 Q 68,218 68,210 L 68,28 Z" fill="url(#emberFire)"/>
-          <circle cx="52" cy="110" r="8" fill="#FF6FD8" fill-opacity=".25"/>
-          <circle cx="52" cy="110" r="5" fill="#FF6FD8" fill-opacity=".12"/>
-          <text x="40" y="150" font-family="monospace" font-size="18" fill="none" stroke="#E91E63" stroke-width=".6" stroke-opacity=".45" text-anchor="middle" dominant-baseline="middle">N</text>
-          <text x="40" y="167" font-family="monospace" font-size="6.5" fill="#E91E63" fill-opacity=".5" text-anchor="middle" letter-spacing="3">EMBER</text>
-        </svg>
-      </div>
-      <div class="product-info">
-        <span class="p-label">Formula 05 · 50 ML</span>
-        <h3 class="p-name">NANZE EMBER</h3>
-        <p class="p-notes">Spiced amber · Incense · Leather</p>
-        <p class="p-price">€185</p>
-      </div>
-      <button class="btn-add" data-name="NANZE EMBER" data-price="185">Add to Cart</button>
-    </article>
-
-    <!-- ── VERTEX ── -->
-    <article class="product-card reveal d6">
-      <div class="bottle-stage">
-        <div class="bottle-glow gt"></div>
-        <svg class="bottle be" viewBox="0 0 84 228" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="vertexBody" x1=".5" y1="0" x2=".5" y2="1">
-              <stop offset="0%"   stop-color="#1A2A3A"/>
-              <stop offset="100%" stop-color="#0A1A28"/>
-            </linearGradient>
-            <linearGradient id="vertexAccent" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#00A89F" stop-opacity=".3"/>
-              <stop offset="100%" stop-color="#00A89F" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <!-- triangular cap -->
-          <polygon points="42,4 24,18 60,18" fill="#0A0A1C" stroke="#00A89F" stroke-opacity=".35" stroke-width=".4"/>
-          <polygon points="42,4 60,18 64,24 48,18" fill="#151520" stroke="#00A89F" stroke-opacity=".25" stroke-width=".3"/>
-          <rect x="20" y="18" width="44" height="10" fill="#0E0E1C"/>
-          <!-- angular body -->
-          <path d="M 16,30 L 12,218 L 72,218 L 68,30 Z" fill="url(#vertexBody)"/>
-          <path d="M 68,30 L 72,218 L 72,80 Z" fill="url(#vertexAccent)"/>
-          <!-- ridge lines -->
-          <line x1="16" y1="30" x2="12" y2="218" stroke="#00A89F" stroke-opacity=".25" stroke-width=".5"/>
-          <line x1="68" y1="30" x2="72" y2="218" stroke="#00A89F" stroke-opacity=".3" stroke-width=".5"/>
-          <line x1="42" y1="30" x2="42" y2="218" stroke="#00A89F" stroke-opacity=".18" stroke-width=".4"/>
-          <!-- geometric accent -->
-          <polygon points="42,60 38,90 46,90" fill="#00A89F" fill-opacity=".2"/>
-          <text x="42" y="150" font-family="monospace" font-size="18" fill="none" stroke="#00A89F" stroke-width=".65" stroke-opacity=".55" text-anchor="middle" dominant-baseline="middle">N</text>
-          <text x="42" y="167" font-family="monospace" font-size="6.5" fill="#00A89F" fill-opacity=".6" text-anchor="middle" letter-spacing="2.5">VERTEX</text>
-        </svg>
-      </div>
-      <div class="product-info">
-        <span class="p-label">Formula 06 · 50 ML</span>
-        <h3 class="p-name">NANZE VERTEX</h3>
-        <p class="p-notes">Citrus note · Aquatic · Herbal</p>
-        <p class="p-price">€185</p>
-      </div>
-      <button class="btn-add" data-name="NANZE VERTEX" data-price="185">Add to Cart</button>
-    </article>
-
+  <!-- PAGINATION -->
+  <div class="pagination-wrap">
+    <button class="pagination-btn" id="prevBtn" aria-label="Previous page">← Previous</button>
+    <span class="pagination-info">
+      Page <span id="currentPage">1</span> of <span id="totalPages">4</span>
+    </span>
+    <button class="pagination-btn" id="nextBtn" aria-label="Next page">Next →</button>
   </div>
 </section>
 
@@ -817,83 +565,93 @@ footer {
 </div>
 
 <script>
-  /* particles */
-  const pw = document.getElementById('particles');
-  for (let i = 0; i < 20; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.cssText = `left:${Math.random()*100}%;top:${50+Math.random()*55}%;` +
-      `animation-duration:${9+Math.random()*14}s;animation-delay:${-Math.random()*22}s;`;
-    pw.appendChild(p);
-  }
+/* ── PRODUCTS DATA ──────────────────────────────────────────── */
+const products = [
+  { id: 1, name: 'VOID', notes: 'Dark amber · Smoked oud · Iron mineral', price: 185, glow: 'gv', bottle: 'bv' },
+  { id: 2, name: 'FLUX', notes: 'White musk · Frozen violet · Ozone', price: 185, glow: 'gt', bottle: 'bf' },
+  { id: 3, name: 'ECHO', notes: 'Bergamot vapor · Silver cedar · Static rain', price: 185, glow: 'gp', bottle: 'be' },
+  { id: 4, name: 'VEIL', notes: 'Sandalwood · Patchouli · Musk', price: 185, glow: 'gv', bottle: 'bv' },
+  { id: 5, name: 'EMBER', notes: 'Spiced amber · Incense · Leather', price: 185, glow: 'gp', bottle: 'bf' },
+  { id: 6, name: 'VERTEX', notes: 'Citrus note · Aquatic · Herbal', price: 185, glow: 'gt', bottle: 'be' },
+  { id: 7, name: 'PRISM', notes: 'Crystalline notes · Light refraction · Clarity', price: 195, glow: 'gt', bottle: 'bv' },
+  { id: 8, name: 'NOCTURNE', notes: 'Midnight blooms · Shadow musk · Moonlight', price: 195, glow: 'gv', bottle: 'bf' },
+  { id: 9, name: 'TEMPEST', notes: 'Stormy air · Petrichor · Electric charge', price: 195, glow: 'gp', bottle: 'be' },
+  { id: 10, name: 'AURORA', notes: 'Ethereal light · Pink florals · Awakening', price: 195, glow: 'gt', bottle: 'bv' },
+  { id: 11, name: 'NEBULA', notes: 'Cosmic dust · Violet haze · Distant stars', price: 195, glow: 'gv', bottle: 'bf' },
+  { id: 12, name: 'MIRAGE', notes: 'Shimmering desert · Sand rose · Illusion', price: 195, glow: 'gp', bottle: 'be' },
+  { id: 13, name: 'CIPHER', notes: 'Encoded scent · Geometric florals · Mystery', price: 205, glow: 'gt', bottle: 'bv' },
+  { id: 14, name: 'SOLACE', notes: 'Cedarwood · Soft musk · Tranquility', price: 205, glow: 'gv', bottle: 'bf' },
+  { id: 15, name: 'PHANTOM', notes: 'Ethereal presence · Transparent notes · Whisper', price: 205, glow: 'gp', bottle: 'be' },
+  { id: 16, name: 'ECLIPSE', notes: 'Deep darkness · Shadow florals · Void', price: 205, glow: 'gv', bottle: 'bv' },
+  { id: 17, name: 'MERIDIAN', notes: 'Linear florals · Precise geometry · Direction', price: 205, glow: 'gt', bottle: 'bf' },
+  { id: 18, name: 'REVERIE', notes: 'Dreamy florals · Soft amber · Daydream', price: 205, glow: 'gp', bottle: 'be' },
+  { id: 19, name: 'SINGULARITY', notes: 'Point of convergence · Core essence · Density', price: 215, glow: 'gt', bottle: 'bv' },
+  { id: 20, name: 'WHISPER', notes: 'Delicate touch · Faint florals · Softness', price: 215, glow: 'gv', bottle: 'bf' },
+];
 
-  /* scroll reveal */
+const productsPerPage = 6;
+let currentPage = 1;
+
+/* ── PAGINATION ──────────────────────────────────────────── */
+function getTotalPages() {
+  return Math.ceil(products.length / productsPerPage);
+}
+
+function getProductsForPage(page) {
+  const start = (page - 1) * productsPerPage;
+  return products.slice(start, start + productsPerPage);
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  const pageProducts = getProductsForPage(currentPage);
+
+  grid.innerHTML = pageProducts.map((p, i) => `
+    <article class="product-card reveal d${Math.min(i + 1, 6)}">
+      <div class="bottle-stage">
+        <div class="bottle-glow ${p.glow}"></div>
+        <svg class="bottle ${p.bottle}" viewBox="0 0 72 218" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="70" height="20" rx="1.5" fill="#0E0E1C" stroke="#B8972A" stroke-width=".5"/>
+          <path d="M 4,24 L 55,24 L 70,39 L 70,212 L 4,212 Z" fill="#1A1A28" stroke="#888" stroke-opacity=".15" stroke-width=".4"/>
+          <rect x="9" y="88" width="47" height="80" rx="1" fill="#fff" fill-opacity=".055"/>
+          <text x="33" y="143" font-family="monospace" font-size="20" fill="none" stroke="#fff" stroke-width=".75" stroke-opacity=".35" text-anchor="middle" dominant-baseline="middle">N</text>
+          <text x="33" y="161" font-family="monospace" font-size="7" fill="#888" fill-opacity=".4" text-anchor="middle" letter-spacing="2">${p.name}</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="p-label">Formula ${p.id:02d} · 50 ML</span>
+        <h3 class="p-name">NANZE ${p.name}</h3>
+        <p class="p-notes">${p.notes}</p>
+        <p class="p-price">€${p.price}</p>
+      </div>
+      <button class="btn-add" data-name="NANZE ${p.name}" data-price="${p.price}">Add to Cart</button>
+    </article>
+  `).join('');
+
+  // Re-attach event listeners
+  attachCartListeners();
+
+  // Update pagination UI
+  document.getElementById('currentPage').textContent = currentPage;
+  document.getElementById('totalPages').textContent = getTotalPages();
+  document.getElementById('prevBtn').disabled = currentPage === 1;
+  document.getElementById('nextBtn').disabled = currentPage === getTotalPages();
+
+  // Trigger reveal animations
   const io = new IntersectionObserver(es => {
     es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
 
-  /* chromatic aberration */
-  const manifesto = document.getElementById('manifesto');
-  const mhl = manifesto.querySelector('.manifesto-hl');
-  let raf = false;
-  window.addEventListener('scroll', () => {
-    if (!raf) {
-      requestAnimationFrame(() => {
-        const r = manifesto.getBoundingClientRect();
-        const p = Math.max(0, Math.min(1, -r.top / (window.innerHeight * .6)));
-        const o = p * 3;
-        mhl.style.textShadow = o > .2
-          ? `${o}px 0 rgba(153,0,0,.35), -${o}px 0 rgba(0,100,200,.35)` : 'none';
-        raf = false;
-      });
-      raf = true;
-    }
-  }, { passive: true });
-
-  /* cart */
-  let cart = [];
-  const pill    = document.getElementById('cartPill');
-  const badge   = document.getElementById('cartBadge');
-  const overlay = document.getElementById('overlay');
-  const drawer  = document.getElementById('drawer');
-  const drClose = document.getElementById('drClose');
-  const drItems = document.getElementById('drItems');
-  const drEmpty = document.getElementById('drEmpty');
-  const drTotal = document.getElementById('drTotal');
-
-  const open  = () => { overlay.classList.add('open');  drawer.classList.add('open');  overlay.setAttribute('aria-hidden','false'); drClose.focus(); };
-  const close = () => { overlay.classList.remove('open'); drawer.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); pill.focus(); };
-
-  pill.addEventListener('click', open);
-  drClose.addEventListener('click', close);
-  overlay.addEventListener('click', close);
-  drawer.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-
-  function render() {
-    const qty   = cart.reduce((s,i) => s + i.qty, 0);
-    const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
-    badge.textContent = qty;
-    badge.style.display = qty > 0 ? 'flex' : 'none';
-    drTotal.textContent = '€' + total;
-    drEmpty.style.display = cart.length ? 'none' : 'block';
-    drItems.querySelectorAll('.dr-item').forEach(el => el.remove());
-    cart.forEach(item => {
-      const d = document.createElement('div');
-      d.className = 'dr-item';
-      d.innerHTML = `<div><div class="dr-item-name">${item.name}</div><div class="dr-item-qty">Qty: ${item.qty}</div></div>` +
-                    `<div class="dr-item-price">€${item.price * item.qty}</div>`;
-      drItems.appendChild(d);
-    });
-  }
-
+function attachCartListeners() {
   document.querySelectorAll('.btn-add').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       const name = btn.dataset.name, price = +btn.dataset.price;
       const hit = cart.find(i => i.name === name);
       hit ? hit.qty++ : cart.push({ name, price, qty: 1 });
-      render();
+      renderCart();
       const orig = btn.textContent;
       btn.textContent = 'Added ✓';
       btn.style.borderColor = 'var(--teal)'; btn.style.color = 'var(--teal)';
@@ -901,8 +659,99 @@ footer {
       open();
     });
   });
+}
 
-  render();
+/* ── PARTICLES ──────────────────────────────────────────── */
+const pw = document.getElementById('particles');
+for (let i = 0; i < 20; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.cssText = `left:${Math.random()*100}%;top:${50+Math.random()*55}%;` +
+    `animation-duration:${9+Math.random()*14}s;animation-delay:${-Math.random()*22}s;`;
+  pw.appendChild(p);
+}
+
+/* ── SCROLL REVEAL ──────────────────────────────────────── */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── CHROMATIC ABERRATION ──────────────────────────────── */
+const manifesto = document.getElementById('manifesto');
+const mhl = manifesto.querySelector('.manifesto-hl');
+let raf = false;
+window.addEventListener('scroll', () => {
+  if (!raf) {
+    requestAnimationFrame(() => {
+      const r = manifesto.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, -r.top / (window.innerHeight * .6)));
+      const o = p * 3;
+      mhl.style.textShadow = o > .2
+        ? `${o}px 0 rgba(153,0,0,.35), -${o}px 0 rgba(0,100,200,.35)` : 'none';
+      raf = false;
+    });
+    raf = true;
+  }
+}, { passive: true });
+
+/* ── CART ───────────────────────────────────────────────── */
+let cart = [];
+const pill    = document.getElementById('cartPill');
+const badge   = document.getElementById('cartBadge');
+const overlay = document.getElementById('overlay');
+const drawer  = document.getElementById('drawer');
+const drClose = document.getElementById('drClose');
+const drItems = document.getElementById('drItems');
+const drEmpty = document.getElementById('drEmpty');
+const drTotal = document.getElementById('drTotal');
+
+const open  = () => { overlay.classList.add('open');  drawer.classList.add('open');  overlay.setAttribute('aria-hidden','false'); drClose.focus(); };
+const close = () => { overlay.classList.remove('open'); drawer.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); pill.focus(); };
+
+pill.addEventListener('click', open);
+drClose.addEventListener('click', close);
+overlay.addEventListener('click', close);
+drawer.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+function renderCart() {
+  const qty   = cart.reduce((s,i) => s + i.qty, 0);
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  badge.textContent = qty;
+  badge.style.display = qty > 0 ? 'flex' : 'none';
+  drTotal.textContent = '€' + total;
+  drEmpty.style.display = cart.length ? 'none' : 'block';
+  drItems.querySelectorAll('.dr-item').forEach(el => el.remove());
+  cart.forEach(item => {
+    const d = document.createElement('div');
+    d.className = 'dr-item';
+    d.innerHTML = `<div><div class="dr-item-name">${item.name}</div><div class="dr-item-qty">Qty: ${item.qty}</div></div>` +
+                  `<div class="dr-item-price">€${item.price * item.qty}</div>`;
+    drItems.appendChild(d);
+  });
+}
+
+renderCart();
+
+/* ── PAGINATION CONTROLS ──────────────────────────────── */
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderProducts();
+    window.scrollTo({ top: document.getElementById('collection').offsetTop - 100, behavior: 'smooth' });
+  }
+});
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (currentPage < getTotalPages()) {
+    currentPage++;
+    renderProducts();
+    window.scrollTo({ top: document.getElementById('collection').offsetTop - 100, behavior: 'smooth' });
+  }
+});
+
+/* ── INITIAL RENDER ──────────────────────────────────── */
+renderProducts();
 </script>
 </body>
 </html>
