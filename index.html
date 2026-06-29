@@ -606,7 +606,9 @@ function renderProducts() {
   const grid = document.getElementById('productGrid');
   const pageProducts = getProductsForPage(currentPage);
 
-  grid.innerHTML = pageProducts.map((p, i) => `
+  grid.innerHTML = pageProducts.map((p, i) => {
+    const idx = String(p.id).padStart(2, '0');
+    return `
     <article class="product-card reveal d${Math.min(i + 1, 6)}">
       <div class="bottle-stage">
         <div class="bottle-glow ${p.glow}"></div>
@@ -619,17 +621,15 @@ function renderProducts() {
         </svg>
       </div>
       <div class="product-info">
-        <span class="p-label">Formula ${p.id:02d} · 50 ML</span>
+        <span class="p-label">Formula ${idx} · 50 ML</span>
         <h3 class="p-name">NANZE ${p.name}</h3>
         <p class="p-notes">${p.notes}</p>
         <p class="p-price">€${p.price}</p>
       </div>
       <button class="btn-add" data-name="NANZE ${p.name}" data-price="${p.price}">Add to Cart</button>
     </article>
-  `).join('');
-
-  // Re-attach event listeners
-  attachCartListeners();
+    `;
+  }).join('');
 
   // Update pagination UI
   document.getElementById('currentPage').textContent = currentPage;
@@ -637,11 +637,15 @@ function renderProducts() {
   document.getElementById('prevBtn').disabled = currentPage === 1;
   document.getElementById('nextBtn').disabled = currentPage === getTotalPages();
 
-  // Trigger reveal animations
-  const io = new IntersectionObserver(es => {
-    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.12 });
-  grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  // Re-attach cart listeners
+  attachCartListeners();
+
+  // Trigger reveal animations for new products
+  grid.querySelectorAll('.reveal').forEach(el => {
+    if (!el.classList.contains('in')) {
+      io.observe(el);
+    }
+  });
 }
 
 function attachCartListeners() {
@@ -734,19 +738,25 @@ function renderCart() {
 renderCart();
 
 /* ── PAGINATION CONTROLS ──────────────────────────────── */
-document.getElementById('prevBtn').addEventListener('click', () => {
+document.getElementById('prevBtn').addEventListener('click', function() {
   if (currentPage > 1) {
     currentPage--;
     renderProducts();
-    window.scrollTo({ top: document.getElementById('collection').offsetTop - 100, behavior: 'smooth' });
+    setTimeout(() => {
+      const el = document.getElementById('collection');
+      if (el) window.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
+    }, 50);
   }
 });
 
-document.getElementById('nextBtn').addEventListener('click', () => {
+document.getElementById('nextBtn').addEventListener('click', function() {
   if (currentPage < getTotalPages()) {
     currentPage++;
     renderProducts();
-    window.scrollTo({ top: document.getElementById('collection').offsetTop - 100, behavior: 'smooth' });
+    setTimeout(() => {
+      const el = document.getElementById('collection');
+      if (el) window.scrollTo({ top: el.offsetTop - 100, behavior: 'smooth' });
+    }, 50);
   }
 });
 
