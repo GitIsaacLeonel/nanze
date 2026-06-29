@@ -1,1084 +1,875 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NANZE — The Scent of What's Next</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <style>
-    /* ─── TOKENS ─────────────────────────────────────────── */
-    :root {
-      --bg:           #050508;
-      --surface:      #0C0C14;
-      --violet:       #C8A8FF;
-      --teal:         #80FFE8;
-      --pink:         #FF6FD8;
-      --text:         #F0EEF8;
-      --muted:        #6B6880;
-      --display:      'Space Grotesk', sans-serif;
-      --body:         'Inter', sans-serif;
-      --mono:         'JetBrains Mono', monospace;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NANZE — The Scent of What's Next</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ──────────────────────────────────────────────── */
+:root {
+  --bg:      #050508;
+  --surface: #0C0C14;
+  --violet:  #C8A8FF;
+  --teal:    #80FFE8;
+  --pink:    #FF6FD8;
+  --text:    #F0EEF8;
+  --muted:   #6B6880;
+  --gold:    #B8972A;
+  --ff-disp: 'Space Grotesk', sans-serif;
+  --ff-body: 'Inter', sans-serif;
+  --ff-mono: 'JetBrains Mono', monospace;
+}
 
-    /* ─── RESET ──────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html  { scroll-behavior: smooth; }
-    body  {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--body);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    a, button { cursor: pointer; }
-    :focus-visible { outline: 2px solid var(--violet); outline-offset: 4px; }
+/* ── RESET ───────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html  { scroll-behavior: smooth; }
+body  {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 2px solid var(--violet); outline-offset: 4px; }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
-    /* ─── NAV ────────────────────────────────────────────── */
-    nav {
-      position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 48px;
-    }
+/* ── NAV ─────────────────────────────────────────────────── */
+nav {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 48px;
+}
+.nav-logo {
+  font-family: var(--ff-disp); font-size: 18px; font-weight: 700;
+  letter-spacing: .35em; color: var(--text); text-decoration: none;
+}
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  transition: color .3s;
+}
+.nav-links a:hover { color: var(--text); }
 
-    .nav-logo {
-      font-family: var(--display);
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      color: var(--text);
-      text-decoration: none;
-    }
+/* ── CART PILL ───────────────────────────────────────────── */
+.cart-pill {
+  position: fixed; top: 22px; right: 48px; z-index: 101;
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(12,12,20,.75); backdrop-filter: blur(12px);
+  border: 1px solid rgba(200,168,255,.2); border-radius: 100px;
+  padding: 10px 22px;
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: .15em;
+  color: var(--text); cursor: pointer;
+  transition: border-color .3s, background .3s;
+}
+.cart-pill:hover { border-color: var(--violet); background: rgba(200,168,255,.06); }
+.cart-pill svg { width: 15px; height: 15px; }
+.cart-badge {
+  background: var(--violet); color: var(--bg);
+  border-radius: 50%; width: 18px; height: 18px;
+  display: none; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700;
+}
 
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
+/* ── HERO ────────────────────────────────────────────────── */
+#hero {
+  position: relative; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+#particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.particle {
+  position: absolute; width: 2px; height: 2px;
+  border-radius: 50%; background: var(--text); opacity: .2;
+  animation: drift linear infinite;
+}
+@keyframes drift {
+  0%   { transform: translateY(100vh); opacity: 0; }
+  10%  { opacity: .2; }
+  90%  { opacity: .1; }
+  100% { transform: translateY(-20px); opacity: 0; }
+}
+.orb-stage {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1; pointer-events: none;
+}
+.orb {
+  width: min(400px,65vw); height: min(400px,65vw);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  background: radial-gradient(ellipse at 40% 38%, #C8A8FF 0%, #4A1A90 45%, #050508 100%);
+  animation: orb-morph 10s ease-in-out infinite,
+             orb-glow   5s ease-in-out infinite,
+             orb-color 10s ease-in-out infinite;
+}
+@keyframes orb-morph {
+  0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50%  { border-radius: 70% 30% 50% 50% / 30% 50% 70% 60%; }
+  75%  { border-radius: 40% 60% 30% 70% / 60% 40% 50% 30%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+@keyframes orb-glow {
+  0%,100%{ box-shadow: 0 0 80px 25px rgba(200,168,255,.4), 0 0 200px 70px rgba(200,168,255,.1); }
+  33%    { box-shadow: 0 0 80px 25px rgba(128,255,232,.4), 0 0 200px 70px rgba(128,255,232,.1); }
+  66%    { box-shadow: 0 0 80px 25px rgba(255,111,216,.4), 0 0 200px 70px rgba(255,111,216,.1); }
+}
+@keyframes orb-color {
+  0%,100%{ background: radial-gradient(ellipse at 40% 38%, #C8A8FF 0%, #4A1A90 45%, #050508 100%); }
+  33%    { background: radial-gradient(ellipse at 60% 38%, #80FFE8 0%, #1A5040 45%, #050508 100%); }
+  66%    { background: radial-gradient(ellipse at 40% 62%, #FF6FD8 0%, #701040 45%, #050508 100%); }
+}
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; display: flex; flex-direction: column;
+  align-items: center; gap: 20px;
+}
+.hero-title {
+  font-family: var(--ff-disp);
+  font-size: clamp(80px,14vw,160px);
+  font-weight: 700; letter-spacing: .3em; line-height: 1;
+  color: var(--text); mix-blend-mode: overlay;
+  pointer-events: none; user-select: none;
+}
+.hero-tag {
+  font-family: var(--ff-mono); font-size: 13px;
+  letter-spacing: .3em; text-transform: uppercase;
+  color: var(--text); opacity: .75;
+}
+.hero-cta {
+  position: relative; display: inline-block;
+  margin-top: 16px; padding: 15px 40px; border-radius: 100px;
+  font-family: var(--ff-mono); font-size: 10px;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--text); text-decoration: none;
+  background: transparent; border: none; cursor: pointer;
+  transition: color .3s, text-shadow .3s;
+}
+.hero-cta::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: 100px; padding: 1px;
+  background: linear-gradient(90deg, var(--violet), var(--teal), var(--pink), var(--violet));
+  background-size: 300% 100%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: border-spin 3s linear infinite;
+}
+.hero-cta:hover { color: #fff; text-shadow: 0 0 20px rgba(200,168,255,.8); }
+@keyframes border-spin {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+.scroll-nudge {
+  position: absolute; bottom: 36px; left: 50%;
+  transform: translateX(-50%); z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  font-family: var(--ff-mono); font-size: 9px;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+}
+.scroll-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, var(--violet), transparent);
+  animation: line-pulse 2s ease-in-out infinite;
+}
+@keyframes line-pulse {
+  0%,100%{ opacity: .3; } 50%{ opacity: 1; }
+}
 
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--text); }
+/* ── SHARED ──────────────────────────────────────────────── */
+.section-eyebrow {
+  font-family: var(--ff-mono); font-size: 10px;
+  letter-spacing: .3em; text-transform: uppercase;
+  color: var(--muted); display: block; margin-bottom: 64px;
+}
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .2s; }
+.d3 { transition-delay: .3s; }
+.d4 { transition-delay: .4s; }
 
-    /* ─── CART PILL ──────────────────────────────────────── */
-    .cart-pill {
-      position: fixed;
-      top: 22px;
-      right: 48px;
-      z-index: 101;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(12,12,20,0.7);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(200,168,255,0.2);
-      border-radius: 100px;
-      padding: 10px 22px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      color: var(--text);
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .cart-pill:hover { border-color: var(--violet); background: rgba(200,168,255,0.06); }
+/* ── COLLECTION ──────────────────────────────────────────── */
+#collection { padding: 140px 48px; background: var(--bg); }
 
-    .cart-pill svg { width: 15px; height: 15px; }
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px; max-width: 1200px; margin: 0 auto;
+}
+.product-card {
+  background: rgba(12,12,20,.8);
+  border: .5px solid rgba(255,255,255,.08);
+  border-radius: 4px;
+  padding: 48px 28px 36px;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  position: relative;
+  transition: transform .45s cubic-bezier(.16,1,.3,1);
+  overflow: visible;
+}
+.product-card:hover { transform: translateY(-6px); }
 
-    .cart-badge {
-      background: var(--violet);
-      color: var(--bg);
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      font-weight: 700;
-    }
+/* bottle stage */
+.bottle-stage {
+  position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
+  height: 220px; width: 100%;
+}
+.bottle-glow {
+  position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 70px; height: 14px; border-radius: 50%;
+  filter: blur(16px); opacity: .45;
+  transition: opacity .4s, width .4s;
+}
+.product-card:hover .bottle-glow { opacity: .85; width: 95px; }
+.gv { background: var(--violet); }
+.gt { background: var(--teal); }
+.gp { background: var(--pink); }
 
-    /* ─── HERO ───────────────────────────────────────────── */
-    #hero {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+/* bottle SVG sizing and animations */
+.bottle { height: 200px; width: auto; display: block; }
 
-    /* Particle layer */
-    #particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-    .particle {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      background: var(--text);
-      opacity: 0.25;
-      animation: drift linear infinite;
-    }
-    @keyframes drift {
-      0%   { transform: translateY(100vh); opacity: 0; }
-      10%  { opacity: 0.25; }
-      90%  { opacity: 0.15; }
-      100% { transform: translateY(-20px); opacity: 0; }
-    }
+@keyframes fv { 0%,100%{ transform: translateY(0);          } 50%{ transform: translateY(-8px);          } }
+@keyframes ff { 0%,100%{ transform: rotate(-1.5deg);        } 50%{ transform: rotate(1.5deg);            } }
+@keyframes fe { 0%,100%{ transform: translateY(0) scale(1); } 50%{ transform: translateY(-6px) scale(1.02); } }
 
-    /* Orb */
-    .orb-stage {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      pointer-events: none;
-    }
+.bv { animation: fv 6s ease-in-out infinite; }
+.bf { animation: ff 5s ease-in-out infinite; }
+.be { animation: fe 7s ease-in-out infinite; }
 
-    .orb {
-      width: min(420px, 70vw);
-      height: min(420px, 70vw);
-      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-      background: radial-gradient(ellipse at 40% 38%, #C8A8FF 0%, #4A1A90 45%, #050508 100%);
-      animation:
-        orb-morph  12s ease-in-out infinite,
-        orb-glow    6s ease-in-out infinite,
-        orb-color  12s ease-in-out infinite;
-      will-change: border-radius, box-shadow, background;
-    }
+.product-card:hover .bottle {
+  filter: drop-shadow(0 0 18px rgba(200,168,255,.35));
+  transition: filter .4s;
+}
+.product-card:hover .bv { filter: drop-shadow(0 0 22px rgba(200,168,255,.5)); }
+.product-card:hover .bf { filter: drop-shadow(0 0 22px rgba(128,255,232,.5)); }
+.product-card:hover .be { filter: drop-shadow(0 0 22px rgba(255,111,216,.5)); }
 
-    @keyframes orb-morph {
-      0%   { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-      16%  { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-      33%  { border-radius: 70% 30% 50% 50% / 30% 50% 70% 60%; }
-      50%  { border-radius: 40% 60% 30% 70% / 60% 40% 50% 30%; }
-      66%  { border-radius: 50% 50% 70% 30% / 40% 70% 30% 50%; }
-      83%  { border-radius: 30% 70% 40% 60% / 70% 30% 60% 40%; }
-      100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-    }
+/* product text */
+.product-info { text-align: center; display: flex; flex-direction: column; gap: 8px; }
+.p-label {
+  font-family: var(--ff-mono); font-size: 9px; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--muted);
+}
+.p-name {
+  font-family: var(--ff-disp); font-size: 22px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--text);
+}
+.p-notes { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.5; }
+.p-price { font-family: var(--ff-disp); font-size: 16px; font-weight: 500; color: var(--text); }
 
-    @keyframes orb-glow {
-      0%, 100% { box-shadow: 0 0 90px 30px rgba(200,168,255,0.45), 0 0 220px 80px rgba(200,168,255,0.12); }
-      33%       { box-shadow: 0 0 90px 30px rgba(128,255,232,0.45), 0 0 220px 80px rgba(128,255,232,0.12); }
-      66%       { box-shadow: 0 0 90px 30px rgba(255,111,216,0.45), 0 0 220px 80px rgba(255,111,216,0.12); }
-    }
+/* CTA hidden, slides up on hover */
+.btn-add {
+  background: transparent;
+  border: 1px solid rgba(200,168,255,.3); border-radius: 100px;
+  padding: 11px 28px;
+  font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--text); cursor: pointer;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .35s ease, transform .35s ease, border-color .25s, color .25s;
+}
+.product-card:hover .btn-add { opacity: 1; transform: translateY(0); }
+.btn-add:hover { border-color: var(--violet); color: var(--violet); }
+@media (hover: none) { .btn-add { opacity: 1; transform: none; } }
 
-    @keyframes orb-color {
-      0%, 100% { background: radial-gradient(ellipse at 40% 38%, #C8A8FF 0%, #4A1A90 45%, #050508 100%); }
-      33%       { background: radial-gradient(ellipse at 60% 38%, #80FFE8 0%, #1A5040 45%, #050508 100%); }
-      66%       { background: radial-gradient(ellipse at 40% 62%, #FF6FD8 0%, #701040 45%, #050508 100%); }
-    }
+/* ── MANIFESTO ───────────────────────────────────────────── */
+#manifesto {
+  padding: 160px 48px; background: var(--surface);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 100px; align-items: center;
+}
+.manifesto-hl {
+  font-family: var(--ff-disp);
+  font-size: clamp(34px,4vw,58px);
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; line-height: 1.15; color: var(--text);
+}
+.manifesto-hl em { font-style: normal; color: var(--violet); }
+.phil-blocks { display: flex; flex-direction: column; }
+.phil-block {
+  padding: 28px 0;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.phil-block:last-child { border-bottom: 1px solid rgba(255,255,255,.05); }
+.phil-tag {
+  font-family: var(--ff-mono); font-size: 9px; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 10px; display: block;
+}
+.phil-block p { font-size: 14px; line-height: 1.75; color: var(--muted); font-weight: 300; }
 
-    /* Hero text — mix-blend-mode: overlay lets orb bleed through the letterforms */
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      pointer-events: none;
-    }
-    .hero-content > * { pointer-events: auto; }
+/* ── FORMULA ─────────────────────────────────────────────── */
+#formula { padding: 140px 0; background: var(--bg); }
+.formula-head { padding: 0 48px; margin-bottom: 56px; }
+.formula-scroll { overflow-x: auto; padding: 0 48px 24px; scrollbar-width: none; }
+.formula-scroll::-webkit-scrollbar { display: none; }
+.el-row { display: flex; gap: 12px; min-width: max-content; }
+.el {
+  width: 90px; height: 90px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 11px; position: relative;
+  display: flex; flex-direction: column; flex-shrink: 0;
+  transition: border-color .3s, background .3s;
+}
+.el:hover { border-color: rgba(200,168,255,.35); background: rgba(200,168,255,.03); }
+.el-n { position: absolute; top: 7px; right: 9px; font-family: var(--ff-mono); font-size: 7px; color: var(--muted); opacity: .4; }
+.el-s { font-family: var(--ff-disp); font-size: 22px; font-weight: 700; color: var(--text); line-height: 1; }
+.el-nm { font-family: var(--ff-mono); font-size: 7.5px; color: var(--muted); margin-top: 5px; line-height: 1.3; }
+.el-or { font-family: var(--ff-mono); font-size: 6.5px; color: var(--violet); margin-top: auto; opacity: .65; }
 
-    .hero-title {
-      font-family: var(--display);
-      font-size: clamp(88px, 16vw, 180px);
-      font-weight: 700;
-      letter-spacing: 0.3em;
-      line-height: 1;
-      color: var(--text);
-      mix-blend-mode: overlay;
-      user-select: none;
-    }
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer { padding: 64px 48px 48px; background: var(--bg); }
+.footer-row {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 40px;
+}
+.footer-wm { font-family: var(--ff-disp); font-size: 22px; font-weight: 700; letter-spacing: .4em; color: var(--text); opacity: .2; }
+.footer-nav { display: flex; gap: 32px; list-style: none; }
+.footer-nav a {
+  font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  transition: color .3s;
+}
+.footer-nav a:hover { color: var(--violet); }
+.footer-tl { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .1em; color: var(--muted); opacity: .4; }
+.footer-cp { text-align: center; font-family: var(--ff-mono); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); opacity: .22; }
 
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+/* ── CART DRAWER ─────────────────────────────────────────── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(5,5,8,.72); backdrop-filter: blur(6px);
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity .35s;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(420px,100vw); background: var(--surface);
+  border-left: 1px solid rgba(200,168,255,.1);
+  z-index: 201; transform: translateX(100%);
+  transition: transform .45s cubic-bezier(.16,1,.3,1);
+  display: flex; flex-direction: column; padding: 40px 36px;
+}
+.drawer.open { transform: none; }
+.dr-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; }
+.dr-title { font-family: var(--ff-disp); font-size: 14px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+.dr-close { background: transparent; border: none; color: var(--muted); font-size: 22px; cursor: pointer; padding: 4px 8px; transition: color .2s; }
+.dr-close:hover { color: var(--text); }
+.dr-items { flex: 1; overflow-y: auto; }
+.dr-empty { font-family: var(--ff-mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); text-align: center; margin-top: 80px; }
+.dr-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+.dr-item-name { font-family: var(--ff-disp); font-size: 13px; font-weight: 500; letter-spacing: .1em; }
+.dr-item-qty { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); margin-top: 3px; }
+.dr-item-price { font-family: var(--ff-disp); font-size: 15px; color: var(--violet); }
+.dr-foot { margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.06); }
+.dr-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+.dr-total-lbl { font-family: var(--ff-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.dr-total-amt { font-family: var(--ff-disp); font-size: 22px; font-weight: 700; }
+.btn-checkout {
+  width: 100%; padding: 16px;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--pink) 100%);
+  border: none; border-radius: 100px;
+  font-family: var(--ff-mono); font-size: 10px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--bg); font-weight: 700; cursor: pointer;
+  transition: opacity .3s, transform .2s;
+}
+.btn-checkout:hover { opacity: .88; transform: scale(1.01); }
 
-    /* CTA — gradient border only, no fill */
-    .hero-cta {
-      margin-top: 20px;
-      position: relative;
-      display: inline-block;
-      padding: 15px 40px;
-      border-radius: 100px;
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text);
-      text-decoration: none;
-      background: transparent;
-      border: none;
-      transition: color 0.3s, text-shadow 0.3s;
-    }
-    .hero-cta::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 100px;
-      padding: 1px;
-      background: linear-gradient(90deg, var(--violet), var(--teal), var(--pink), var(--violet));
-      background-size: 300% 100%;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-      animation: border-rotate 3s linear infinite;
-    }
-    .hero-cta:hover { color: #fff; text-shadow: 0 0 24px rgba(200,168,255,0.9); }
-    .hero-cta:hover::before { animation-duration: 1s; }
-
-    @keyframes border-rotate {
-      0%   { background-position: 0% 50%; }
-      100% { background-position: 300% 50%; }
-    }
-
-    /* Scroll nudge */
-    .scroll-nudge {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .scroll-line {
-      width: 1px;
-      height: 44px;
-      background: linear-gradient(to bottom, var(--violet), transparent);
-      animation: line-pulse 2s ease-in-out infinite;
-    }
-    @keyframes line-pulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); transform-origin: top; }
-      50%       { opacity: 1;   transform: scaleY(1.15); transform-origin: top; }
-    }
-
-    /* ─── SHARED SECTION STYLES ──────────────────────────── */
-    .section-eyebrow {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 60px;
-      display: block;
-    }
-
-    /* Scroll-reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.in { opacity: 1; transform: none; }
-    .d1 { transition-delay: 0.1s; }
-    .d2 { transition-delay: 0.2s; }
-    .d3 { transition-delay: 0.3s; }
-    .d4 { transition-delay: 0.4s; }
-
-    /* ─── COLLECTION ─────────────────────────────────────── */
-    #collection {
-      padding: 140px 48px;
-      background: var(--bg);
-    }
-
-    .collection-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    .product-card {
-      background: var(--surface);
-      border: 1px solid rgba(200,168,255,0.08);
-      border-radius: 3px;
-      padding: 48px 36px 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1),
-                  box-shadow  0.45s ease;
-    }
-
-    /* Holographic shimmer border on hover */
-    .product-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 3px;
-      padding: 1px;
-      background: linear-gradient(135deg,
-        var(--violet) 0%,
-        var(--teal)   40%,
-        var(--pink)   70%,
-        var(--violet) 100%);
-      background-size: 300% 300%;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box,
-                    linear-gradient(#fff 0 0);
-      -webkit-mask-composite: destination-out;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      animation: shimmer 4s linear infinite;
-    }
-    @keyframes shimmer {
-      0%   { background-position: 0% 0%; }
-      100% { background-position: 300% 300%; }
-    }
-    .product-card:hover::after  { opacity: 1; }
-    .product-card:hover {
-      transform: scale(1.025);
-      box-shadow: 0 24px 80px rgba(200,168,255,0.08);
-    }
-
-    .product-glyph { width: 72px; height: 72px; }
-
-    .product-label {
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .product-name {
-      font-family: var(--display);
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text);
-      line-height: 1.1;
-    }
-
-    .product-desc {
-      font-size: 13px;
-      line-height: 1.65;
-      color: var(--muted);
-      font-weight: 300;
-    }
-
-    .product-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: auto;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .product-price {
-      font-family: var(--display);
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .btn-cart {
-      background: transparent;
-      border: 1px solid rgba(200,168,255,0.25);
-      border-radius: 100px;
-      padding: 10px 22px;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text);
-      transition: all 0.3s;
-    }
-    .btn-cart:hover {
-      background: rgba(200,168,255,0.08);
-      border-color: var(--violet);
-      color: var(--violet);
-    }
-
-    /* ─── RITUAL ─────────────────────────────────────────── */
-    #ritual {
-      padding: 160px 48px;
-      background: var(--surface);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 100px;
-      align-items: center;
-    }
-
-    .ritual-statement {
-      font-family: var(--display);
-      font-size: clamp(38px, 4.5vw, 68px);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: 0.01em;
-      color: var(--text);
-    }
-    .ritual-statement em {
-      font-style: normal;
-      color: var(--violet);
-    }
-
-    .ritual-blocks { display: flex; flex-direction: column; }
-
-    .ritual-block {
-      padding: 28px 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    .ritual-block:last-child { border-bottom: 1px solid rgba(255,255,255,0.05); }
-
-    .ritual-block-tag {
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .ritual-block p {
-      font-size: 14px;
-      line-height: 1.75;
-      color: var(--muted);
-      font-weight: 300;
-    }
-
-    /* ─── FORMULA ────────────────────────────────────────── */
-    #formula {
-      padding: 140px 0;
-      background: var(--bg);
-    }
-
-    .formula-head { padding: 0 48px; margin-bottom: 56px; }
-
-    .formula-scroll {
-      overflow-x: auto;
-      padding: 0 48px 32px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(200,168,255,0.25) transparent;
-    }
-    .formula-scroll::-webkit-scrollbar { height: 1px; }
-    .formula-scroll::-webkit-scrollbar-thumb { background: rgba(200,168,255,0.25); }
-
-    .elements-row { display: flex; gap: 12px; min-width: max-content; }
-
-    .element {
-      width: 116px;
-      height: 136px;
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 14px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.3s, background 0.3s;
-      flex-shrink: 0;
-    }
-    .element:hover {
-      border-color: rgba(200,168,255,0.35);
-      background: rgba(200,168,255,0.03);
-    }
-
-    .el-num {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      font-family: var(--mono);
-      font-size: 8px;
-      color: var(--muted);
-      opacity: 0.45;
-    }
-
-    .el-sym {
-      font-family: var(--display);
-      font-size: 34px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1;
-      margin-top: 10px;
-    }
-
-    .el-name {
-      font-family: var(--mono);
-      font-size: 8.5px;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      margin-top: 7px;
-      line-height: 1.4;
-    }
-
-    .el-origin {
-      font-family: var(--mono);
-      font-size: 7.5px;
-      letter-spacing: 0.06em;
-      color: var(--violet);
-      margin-top: auto;
-      opacity: 0.65;
-    }
-
-    /* ─── CART DRAWER ────────────────────────────────────── */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(5,5,8,0.72);
-      backdrop-filter: blur(6px);
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s;
-    }
-    .overlay.open { opacity: 1; pointer-events: all; }
-
-    .drawer {
-      position: fixed;
-      top: 0; right: 0; bottom: 0;
-      width: min(420px, 100vw);
-      background: var(--surface);
-      border-left: 1px solid rgba(200,168,255,0.1);
-      z-index: 201;
-      transform: translateX(100%);
-      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
-      display: flex;
-      flex-direction: column;
-      padding: 40px 36px;
-    }
-    .drawer.open { transform: none; }
-
-    .drawer-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 36px;
-    }
-    .drawer-title {
-      font-family: var(--display);
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-    .drawer-close {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      font-size: 22px;
-      line-height: 1;
-      padding: 4px 8px;
-      transition: color 0.2s;
-    }
-    .drawer-close:hover { color: var(--text); }
-
-    .drawer-items {
-      flex: 1;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .drawer-empty {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 80px;
-    }
-
-    .drawer-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .drawer-item-name {
-      font-family: var(--display);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-    }
-    .drawer-item-qty {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-    .drawer-item-price {
-      font-family: var(--display);
-      font-size: 16px;
-      color: var(--violet);
-    }
-
-    .drawer-foot {
-      margin-top: 28px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .drawer-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 22px;
-    }
-    .drawer-total-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .drawer-total-amt {
-      font-family: var(--display);
-      font-size: 24px;
-      font-weight: 700;
-    }
-    .checkout-btn {
-      width: 100%;
-      padding: 17px;
-      background: linear-gradient(135deg, var(--violet) 0%, var(--pink) 100%);
-      border: none;
-      border-radius: 100px;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--bg);
-      font-weight: 700;
-      transition: opacity 0.3s, transform 0.2s;
-    }
-    .checkout-btn:hover { opacity: 0.88; transform: scale(1.01); }
-
-    /* ─── FOOTER ─────────────────────────────────────────── */
-    footer {
-      padding: 100px 48px 60px;
-      background: var(--bg);
-      border-top: 1px solid rgba(255,255,255,0.04);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 28px;
-    }
-    .footer-wordmark {
-      font-family: var(--display);
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: 0.5em;
-      color: var(--text);
-      opacity: 0.18;
-    }
-    .footer-nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 36px;
-      list-style: none;
-    }
-    .footer-nav a {
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .footer-nav a:hover { color: var(--violet); }
-    .footer-tagline {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      opacity: 0.45;
-    }
-    .footer-copy {
-      font-family: var(--mono);
-      font-size: 8px;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      opacity: 0.22;
-    }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────── */
-    @media (max-width: 900px) {
-      nav { padding: 20px 24px; }
-      .nav-links { display: none; }
-      .cart-pill { right: 24px; top: 18px; }
-
-      #collection { padding: 100px 24px; }
-      .collection-grid { grid-template-columns: 1fr; }
-
-      #ritual {
-        padding: 100px 24px;
-        grid-template-columns: 1fr;
-        gap: 56px;
-      }
-
-      .formula-head { padding: 0 24px; }
-      .formula-scroll { padding: 0 24px 24px; }
-
-      footer { padding: 80px 24px 48px; }
-    }
-  </style>
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .cart-pill { right: 24px; top: 18px; }
+  #collection { padding: 100px 24px; }
+  .collection-grid { grid-template-columns: 1fr; gap: 40px; }
+  #manifesto { padding: 100px 24px; grid-template-columns: 1fr; gap: 56px; }
+  .formula-head { padding: 0 24px; }
+  .formula-scroll { padding: 0 24px 24px; }
+  footer { padding: 48px 24px 36px; }
+  .footer-row { flex-direction: column; gap: 24px; text-align: center; }
+  .footer-nav { flex-wrap: wrap; justify-content: center; gap: 20px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- ── NAV ──────────────────────────────────────────────── -->
-  <nav aria-label="Primary navigation">
-    <a href="#hero" class="nav-logo">NANZE</a>
-    <ul class="nav-links">
+<!-- NAV -->
+<nav aria-label="Primary navigation">
+  <a href="#hero" class="nav-logo">NANZE</a>
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#manifesto">Philosophy</a></li>
+    <li><a href="#formula">Formula</a></li>
+  </ul>
+</nav>
+
+<!-- CART -->
+<button class="cart-pill" id="cartPill" aria-label="Open cart">
+  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M1 1.5h2.2l2.2 7.5h6.5l1.6-5H4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="6.2" cy="13.2" r="1" fill="currentColor"/>
+    <circle cx="12"  cy="13.2" r="1" fill="currentColor"/>
+  </svg>
+  CART
+  <span class="cart-badge" id="cartBadge" aria-live="polite"></span>
+</button>
+
+<!-- HERO -->
+<section id="hero" aria-label="Hero">
+  <div id="particles" aria-hidden="true"></div>
+  <div class="orb-stage" aria-hidden="true"><div class="orb"></div></div>
+  <div class="hero-content">
+    <h1 class="hero-title">NANZE</h1>
+    <p class="hero-tag">The Scent of What's Next</p>
+    <a href="#collection" class="hero-cta">Discover the Collection</a>
+  </div>
+  <div class="scroll-nudge" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section id="collection" aria-labelledby="col-title">
+  <span class="section-eyebrow reveal" id="col-title">01 — Collection</span>
+  <div class="collection-grid">
+
+    <!-- ── VOID ── -->
+    <article class="product-card reveal d1">
+      <div class="bottle-stage">
+        <div class="bottle-glow gv"></div>
+
+        <svg class="bottle bv" viewBox="0 0 72 218" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="vBody" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#1E1E32"/>
+              <stop offset="100%" stop-color="#111120"/>
+            </linearGradient>
+            <linearGradient id="vStreak" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#C8A8FF" stop-opacity=".9"/>
+              <stop offset="45%"  stop-color="#C8A8FF" stop-opacity=".25"/>
+              <stop offset="100%" stop-color="#C8A8FF" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="vShine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#fff" stop-opacity=".13"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="vCap" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#18182A"/>
+              <stop offset="100%" stop-color="#0A0A16"/>
+            </linearGradient>
+          </defs>
+
+          <!-- cap -->
+          <rect x="1" y="1" width="70" height="20" rx="1.5"
+                fill="url(#vCap)" stroke="#B8972A" stroke-width=".5"/>
+          <rect x="4" y="4" width="64" height="2" rx=".5" fill="#fff" fill-opacity=".04"/>
+          <!-- cap-to-body ledge -->
+          <rect x="10" y="18" width="52" height="6" fill="#0E0E1C"/>
+
+          <!-- body — top-right corner clipped at 45° -->
+          <path d="M 4,24 L 55,24 L 70,39 L 70,212 L 4,212 Z"
+                fill="url(#vBody)" stroke="#B8972A" stroke-width=".5"/>
+
+          <!-- purple streak left -->
+          <path d="M 4,24 L 19,24 L 19,212 L 4,212 Z" fill="url(#vStreak)"/>
+
+          <!-- glass shine left edge -->
+          <path d="M 4,24 L 13,24 L 13,212 L 4,212 Z" fill="url(#vShine)"/>
+
+          <!-- liquid fill strip right -->
+          <path d="M 63,39 L 70,39 L 70,212 L 63,212 Z" fill="#3D0066" fill-opacity=".72"/>
+          <path d="M 63,39 L 66,39 L 66,212 L 63,212 Z" fill="#9900DD" fill-opacity=".25"/>
+
+          <!-- frosted label -->
+          <rect x="9" y="88" width="47" height="80" rx="1"
+                fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".07" stroke-width=".3"/>
+
+          <!-- N logo — outline only -->
+          <text x="33" y="143" font-family="monospace" font-size="20"
+                fill="none" stroke="#fff" stroke-width=".75" stroke-opacity=".55"
+                text-anchor="middle" dominant-baseline="middle">N</text>
+
+          <!-- VOID label -->
+          <text x="33" y="161" font-family="monospace" font-size="6.5"
+                fill="#fff" fill-opacity=".45" text-anchor="middle" letter-spacing="3.5">VOID</text>
+
+          <!-- bottom gold line -->
+          <line x1="4" y1="211" x2="70" y2="211" stroke="#B8972A" stroke-opacity=".5" stroke-width=".3"/>
+          <!-- left highlight -->
+          <line x1="4.3" y1="24" x2="4.3" y2="212" stroke="#fff" stroke-opacity=".1" stroke-width=".4"/>
+          <!-- clip edge line -->
+          <line x1="55" y1="24" x2="70" y2="39" stroke="#B8972A" stroke-width=".5"/>
+        </svg>
+      </div>
+
+      <div class="product-info">
+        <span class="p-label">Formula 01 · 50 ML</span>
+        <h3 class="p-name">NANZE VOID</h3>
+        <p class="p-notes">Dark amber · Smoked oud · Iron mineral</p>
+        <p class="p-price">€185</p>
+      </div>
+      <button class="btn-add" data-name="NANZE VOID" data-price="185">Add to Cart</button>
+    </article>
+
+    <!-- ── FLUX ── -->
+    <article class="product-card reveal d2">
+      <div class="bottle-stage">
+        <div class="bottle-glow gt"></div>
+
+        <svg class="bottle bf" viewBox="0 0 96 236" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="fGlow" cx="50%" cy="43%" r="50%">
+              <stop offset="0%"   stop-color="#0AFFD2" stop-opacity=".55"/>
+              <stop offset="38%"  stop-color="#0A3050" stop-opacity=".7"/>
+              <stop offset="100%" stop-color="#050525" stop-opacity=".95"/>
+            </radialGradient>
+            <radialGradient id="fGlow2" cx="35%" cy="33%" r="42%">
+              <stop offset="0%"   stop-color="#fff" stop-opacity=".2"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="fCap" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#80FFE8"/>
+              <stop offset="100%" stop-color="#FF6FD8"/>
+            </linearGradient>
+            <linearGradient id="fCapS" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#fff" stop-opacity=".38"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="fNeck" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#0A1A28"/>
+              <stop offset="100%" stop-color="#081320"/>
+            </linearGradient>
+            <pattern id="fScan" x="0" y="0" width="96" height="4" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="96" y2="0" stroke="#fff" stroke-width=".45" stroke-opacity=".08"/>
+            </pattern>
+            <clipPath id="fClip">
+              <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z"/>
+            </clipPath>
+            <clipPath id="fCapClip">
+              <ellipse cx="48" cy="21" rx="19" ry="21"/>
+            </clipPath>
+          </defs>
+
+          <!-- dome cap -->
+          <ellipse cx="48" cy="21" rx="19" ry="21" fill="url(#fCap)" opacity=".88"/>
+          <path d="M 29,21 C 29,0 67,0 67,21" fill="url(#fCapS)" clip-path="url(#fCapClip)"/>
+          <ellipse cx="42" cy="13" rx="6" ry="4" fill="#fff" fill-opacity=".26" transform="rotate(-12,42,13)"/>
+
+          <!-- neck -->
+          <path d="M 38,39 L 40,58 L 56,58 L 58,39 Z" fill="url(#fNeck)"/>
+          <line x1="38" y1="39" x2="40" y2="58" stroke="#0AFFD2" stroke-opacity=".28" stroke-width=".4"/>
+          <line x1="58" y1="39" x2="56" y2="58" stroke="#0AFFD2" stroke-opacity=".28" stroke-width=".4"/>
+
+          <!-- body -->
+          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z"
+                fill="url(#fGlow)"/>
+          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z"
+                fill="url(#fGlow2)"/>
+
+          <!-- scanlines -->
+          <rect x="0" y="56" width="96" height="168" fill="url(#fScan)" clip-path="url(#fClip)"/>
+
+          <!-- left edge teal glow line -->
+          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222"
+                stroke="#0AFFD2" stroke-opacity=".3" stroke-width=".8" fill="none"/>
+
+          <!-- N logo teal -->
+          <text x="48" y="148" font-family="monospace" font-size="18"
+                fill="none" stroke="#80FFE8" stroke-width=".75" stroke-opacity=".65"
+                text-anchor="middle" dominant-baseline="middle">N</text>
+
+          <!-- FLUX label -->
+          <text x="48" y="165" font-family="monospace" font-size="6.5"
+                fill="#80FFE8" fill-opacity=".65" text-anchor="middle" letter-spacing="3.5">FLUX</text>
+        </svg>
+      </div>
+
+      <div class="product-info">
+        <span class="p-label">Formula 02 · 50 ML</span>
+        <h3 class="p-name">NANZE FLUX</h3>
+        <p class="p-notes">White musk · Frozen violet · Ozone</p>
+        <p class="p-price">€185</p>
+      </div>
+      <button class="btn-add" data-name="NANZE FLUX" data-price="185">Add to Cart</button>
+    </article>
+
+    <!-- ── ECHO ── -->
+    <article class="product-card reveal d3">
+      <div class="bottle-stage">
+        <div class="bottle-glow gp"></div>
+
+        <svg class="bottle be" viewBox="0 0 88 228" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="eBody" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#1A0A10"/>
+              <stop offset="100%" stop-color="#22091A"/>
+            </linearGradient>
+            <linearGradient id="ePink" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#FF6FD8" stop-opacity=".52"/>
+              <stop offset="45%"  stop-color="#FF6FD8" stop-opacity=".14"/>
+              <stop offset="100%" stop-color="#FF6FD8" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="eShine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#fff" stop-opacity=".09"/>
+              <stop offset="40%"  stop-color="#fff" stop-opacity=".03"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="eCap" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#2C0A1C"/>
+              <stop offset="100%" stop-color="#140610"/>
+            </linearGradient>
+            <linearGradient id="eCapT" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="#3C1028"/>
+              <stop offset="100%" stop-color="#1C0814"/>
+            </linearGradient>
+            <clipPath id="eClip">
+              <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"/>
+            </clipPath>
+          </defs>
+
+          <!-- hex prism cap: 3 visible faces -->
+          <!-- front face -->
+          <rect x="16" y="10" width="54" height="24" fill="url(#eCap)"/>
+          <!-- top face (perspective) -->
+          <polygon points="16,10 70,10 76,4 22,4" fill="url(#eCapT)"/>
+          <!-- right side face -->
+          <polygon points="70,10 76,4 76,28 70,34" fill="#0C040A" fill-opacity=".9"/>
+          <!-- cap outlines -->
+          <polygon points="16,10 70,10 76,4 22,4" stroke="#FF6FD8" stroke-opacity=".35" stroke-width=".4" fill="none"/>
+          <rect x="16" y="10" width="54" height="24" stroke="#FF6FD8" stroke-opacity=".3" stroke-width=".4" fill="none"/>
+          <polygon points="70,10 76,4 76,28 70,34" stroke="#FF6FD8" stroke-opacity=".25" stroke-width=".4" fill="none"/>
+          <!-- cap highlight line -->
+          <line x1="19" y1="13" x2="67" y2="13" stroke="#fff" stroke-opacity=".12" stroke-width=".4"/>
+
+          <!-- body: left=straight, right=S-curve -->
+          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"
+                fill="url(#eBody)"/>
+          <!-- diagonal pink slash -->
+          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"
+                fill="url(#ePink)"/>
+          <!-- glass shine left -->
+          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"
+                fill="url(#eShine)"/>
+
+          <!-- groove 1 -->
+          <line x1="16" y1="98"  x2="80" y2="106" stroke="#FF6FD8" stroke-opacity=".22" stroke-width=".6"/>
+          <line x1="16" y1="98.6" x2="80" y2="106.6" stroke="#fff" stroke-opacity=".05" stroke-width=".3"/>
+
+          <!-- groove 2 -->
+          <line x1="16" y1="146" x2="78" y2="153" stroke="#FF6FD8" stroke-opacity=".18" stroke-width=".6"/>
+          <line x1="16" y1="146.6" x2="78" y2="153.6" stroke="#fff" stroke-opacity=".04" stroke-width=".3"/>
+
+          <!-- right edge S-curve neon line -->
+          <path d="M 70,34 C 74,62 82,92 82,130 C 82,168 74,200 60,218"
+                stroke="#FF6FD8" stroke-opacity=".38" stroke-width=".9" fill="none"/>
+
+          <!-- left edge highlight -->
+          <line x1="16.4" y1="34" x2="16.4" y2="218" stroke="#fff" stroke-opacity=".1" stroke-width=".4"/>
+
+          <!-- star glyph -->
+          <!-- 4-point star centered at (43,154) -->
+          <path d="M 43,148 L 44.8,153 L 43,158 L 41.2,153 Z M 37,153 L 42,151.5 L 49,153 L 42,154.5 Z"
+                fill="#FF6FD8" fill-opacity=".65"/>
+
+          <!-- ECHO label -->
+          <text x="43" y="170" font-family="monospace" font-size="6.5"
+                fill="#FF6FD8" fill-opacity=".6" text-anchor="middle" letter-spacing="3.5">ECHO</text>
+
+          <!-- bottom edge -->
+          <line x1="16" y1="218" x2="60" y2="218" stroke="#FF6FD8" stroke-opacity=".28" stroke-width=".4"/>
+        </svg>
+      </div>
+
+      <div class="product-info">
+        <span class="p-label">Formula 03 · 50 ML</span>
+        <h3 class="p-name">NANZE ECHO</h3>
+        <p class="p-notes">Bergamot vapor · Silver cedar · Static rain</p>
+        <p class="p-price">€185</p>
+      </div>
+      <button class="btn-add" data-name="NANZE ECHO" data-price="185">Add to Cart</button>
+    </article>
+
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section id="manifesto" aria-labelledby="mf-title">
+  <div class="reveal">
+    <h2 class="manifesto-hl" id="mf-title">
+      Fragrance<br>is not worn.<br><em>It is activated.</em>
+    </h2>
+  </div>
+  <div class="phil-blocks">
+    <div class="phil-block reveal d1">
+      <span class="phil-tag">Origin</span>
+      <p>Every NANZE formula begins not with a nose, but with a state of matter. We source from climatic extremes — mineral springs, volcanic residue, arctic air — and translate them into molecular signatures that interact with your skin's electromagnetic field.</p>
+    </div>
+    <div class="phil-block reveal d2">
+      <span class="phil-tag">Reaction</span>
+      <p>The scent is not a fixed thing. It is a process. Applied to skin, NANZE molecules undergo a controlled thermal reaction in the first 90 seconds — opening with volatility, then settling into a structure unique to your body chemistry. No two wearers produce the same result.</p>
+    </div>
+    <div class="phil-block reveal d3">
+      <span class="phil-tag">Persistence</span>
+      <p>NANZE is formulated to leave a field, not a trail. The molecular weight of each accord is calibrated to linger in the space you've occupied — a presence that outlasts departure.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULA -->
+<section id="formula" aria-labelledby="fm-title">
+  <div class="formula-head reveal">
+    <span class="section-eyebrow" id="fm-title">02 — Formula</span>
+  </div>
+  <div class="formula-scroll" role="region" aria-label="Ingredient list — scroll horizontally">
+    <div class="el-row">
+      <div class="el reveal">    <span class="el-n">01</span><span class="el-s">Od</span><span class="el-nm">Oud Resin</span><span class="el-or">Somalia</span></div>
+      <div class="el reveal d1"> <span class="el-n">02</span><span class="el-s">Mk</span><span class="el-nm">White Musk</span><span class="el-or">Synthetic Lab</span></div>
+      <div class="el reveal d2"> <span class="el-n">03</span><span class="el-s">Bg</span><span class="el-nm">Bergamot</span><span class="el-or">Calabria, IT</span></div>
+      <div class="el reveal d3"> <span class="el-n">04</span><span class="el-s">Vt</span><span class="el-nm">Violet Molecule</span><span class="el-or">Paris Lab</span></div>
+      <div class="el reveal d4"> <span class="el-n">05</span><span class="el-s">Ir</span><span class="el-nm">Iris Root</span><span class="el-or">Florence</span></div>
+      <div class="el reveal">    <span class="el-n">06</span><span class="el-s">Sm</span><span class="el-nm">Smoked Mineral</span><span class="el-or">Iceland</span></div>
+      <div class="el reveal d1"> <span class="el-n">07</span><span class="el-s">Rw</span><span class="el-nm">Rainwater</span><span class="el-or">Synthetic</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-row">
+    <div class="footer-wm">NANZE</div>
+    <ul class="footer-nav">
       <li><a href="#collection">Collection</a></li>
-      <li><a href="#ritual">Philosophy</a></li>
-      <li><a href="#formula">Formula</a></li>
-    </ul>
-  </nav>
-
-  <!-- ── CART PILL ─────────────────────────────────────────── -->
-  <button class="cart-pill" id="cartPill" aria-label="Open cart">
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M1 1.5h2.2l2.2 7.5h6.5l1.6-5H4.5" stroke="currentColor" stroke-width="1.1"
-            stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="6.2" cy="13.2" r="1" fill="currentColor"/>
-      <circle cx="12"  cy="13.2" r="1" fill="currentColor"/>
-    </svg>
-    CART
-    <span class="cart-badge" id="cartBadge" aria-live="polite"></span>
-  </button>
-
-  <!-- ── HERO ──────────────────────────────────────────────── -->
-  <section id="hero" aria-label="Hero">
-    <div id="particles" aria-hidden="true"></div>
-
-    <div class="orb-stage" aria-hidden="true">
-      <div class="orb"></div>
-    </div>
-
-    <div class="hero-content">
-      <h1 class="hero-title">NANZE</h1>
-      <p class="hero-tag">The Scent of What's Next</p>
-      <a href="#collection" class="hero-cta">Discover the Collection</a>
-    </div>
-
-    <div class="scroll-nudge" aria-hidden="true">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
-    </div>
-  </section>
-
-  <!-- ── COLLECTION ────────────────────────────────────────── -->
-  <section id="collection" aria-labelledby="col-title">
-    <span class="section-eyebrow reveal" id="col-title">01 — Collection</span>
-
-    <div class="collection-grid">
-
-      <!-- VOID -->
-      <article class="product-card reveal d1">
-        <svg class="product-glyph" viewBox="0 0 72 72" fill="none" aria-hidden="true">
-          <polygon points="36,6 66,22 66,50 36,66 6,50 6,22"
-                   stroke="#C8A8FF" stroke-width="1" fill="none" opacity="0.55"/>
-          <polygon points="36,18 54,28 54,44 36,54 18,44 18,28"
-                   stroke="#C8A8FF" stroke-width="0.5" fill="none" opacity="0.3"/>
-          <circle cx="36" cy="36" r="4.5" fill="#C8A8FF" opacity="0.85"/>
-          <!-- spokes -->
-          <line x1="36" y1="6"  x2="36" y2="18" stroke="#C8A8FF" stroke-width="0.5" opacity="0.35"/>
-          <line x1="66" y1="22" x2="54" y2="28" stroke="#C8A8FF" stroke-width="0.5" opacity="0.35"/>
-          <line x1="66" y1="50" x2="54" y2="44" stroke="#C8A8FF" stroke-width="0.5" opacity="0.35"/>
-          <line x1="36" y1="66" x2="36" y2="54" stroke="#C8A8FF" stroke-width="0.5" opacity="0.35"/>
-          <line x1="6"  y1="50" x2="18" y2="44" stroke="#C8A8FF" stroke-width="0.5" opacity="0.35"/>
-          <line x1="6"  y1="22" x2="18" y2="28" stroke="#C8A8FF" stroke-width="0.5" opacity="0.35"/>
-        </svg>
-        <span class="product-label">Formula 01 · Volume 50ml</span>
-        <h3 class="product-name">NANZE VOID</h3>
-        <p class="product-desc">Dark amber, smoked oud, iron mineral</p>
-        <div class="product-foot">
-          <span class="product-price">€185</span>
-          <button class="btn-cart" data-name="NANZE VOID" data-price="185">Add to Cart</button>
-        </div>
-      </article>
-
-      <!-- FLUX -->
-      <article class="product-card reveal d2">
-        <svg class="product-glyph" viewBox="0 0 72 72" fill="none" aria-hidden="true">
-          <path d="M8 22 Q22 8  36 22 Q50 36 64 22" stroke="#80FFE8" stroke-width="1.6" fill="none" opacity="0.85"/>
-          <path d="M8 36 Q22 22 36 36 Q50 50 64 36" stroke="#80FFE8" stroke-width="1"   fill="none" opacity="0.5"/>
-          <path d="M8 50 Q22 36 36 50 Q50 64 64 50" stroke="#80FFE8" stroke-width="0.5" fill="none" opacity="0.28"/>
-          <circle cx="8"  cy="22" r="2.5" fill="#80FFE8" opacity="0.7"/>
-          <circle cx="64" cy="22" r="2.5" fill="#80FFE8" opacity="0.7"/>
-          <circle cx="36" cy="36" r="3.5" fill="#80FFE8" opacity="1"/>
-        </svg>
-        <span class="product-label">Formula 02 · Volume 50ml</span>
-        <h3 class="product-name">NANZE FLUX</h3>
-        <p class="product-desc">White musk, frozen violet, ozone</p>
-        <div class="product-foot">
-          <span class="product-price">€185</span>
-          <button class="btn-cart" data-name="NANZE FLUX" data-price="185">Add to Cart</button>
-        </div>
-      </article>
-
-      <!-- ECHO -->
-      <article class="product-card reveal d3">
-        <svg class="product-glyph" viewBox="0 0 72 72" fill="none" aria-hidden="true">
-          <circle cx="36" cy="36" r="5.5"  fill="#FF6FD8" opacity="0.95"/>
-          <circle cx="36" cy="36" r="14"   stroke="#FF6FD8" stroke-width="1"   fill="none" opacity="0.6"/>
-          <circle cx="36" cy="36" r="23"   stroke="#FF6FD8" stroke-width="0.6" fill="none" opacity="0.32"/>
-          <circle cx="36" cy="36" r="32"   stroke="#FF6FD8" stroke-width="0.3" fill="none" opacity="0.14"/>
-          <!-- cardinal ticks -->
-          <line x1="36" y1="2"  x2="36" y2="11"  stroke="#FF6FD8" stroke-width="0.5" opacity="0.4"/>
-          <line x1="70" y1="36" x2="61" y2="36"  stroke="#FF6FD8" stroke-width="0.5" opacity="0.4"/>
-          <line x1="36" y1="70" x2="36" y2="61"  stroke="#FF6FD8" stroke-width="0.5" opacity="0.4"/>
-          <line x1="2"  y1="36" x2="11" y2="36"  stroke="#FF6FD8" stroke-width="0.5" opacity="0.4"/>
-        </svg>
-        <span class="product-label">Formula 03 · Volume 50ml</span>
-        <h3 class="product-name">NANZE ECHO</h3>
-        <p class="product-desc">Bergamot vapor, silver cedar, static rain</p>
-        <div class="product-foot">
-          <span class="product-price">€185</span>
-          <button class="btn-cart" data-name="NANZE ECHO" data-price="185">Add to Cart</button>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- ── RITUAL ─────────────────────────────────────────────── -->
-  <section id="ritual" aria-labelledby="ritual-title">
-    <div class="ritual-left reveal">
-      <h2 class="ritual-statement" id="ritual-title">
-        Fragrance<br>is not worn.<br><em>It is activated.</em>
-      </h2>
-    </div>
-
-    <div class="ritual-blocks">
-      <div class="ritual-block reveal d1">
-        <span class="ritual-block-tag">Origin</span>
-        <p>Every NANZE formula begins not with a nose, but with a state of matter. We source from climatic extremes — mineral springs, volcanic residue, arctic air — and translate them into molecular signatures that interact with your skin's electromagnetic field.</p>
-      </div>
-      <div class="ritual-block reveal d2">
-        <span class="ritual-block-tag">Reaction</span>
-        <p>The scent is not a fixed thing. It is a process. Applied to skin, NANZE molecules undergo a controlled thermal reaction in the first 90 seconds — opening with volatility, then settling into a structure unique to your body chemistry. No two wearers produce the same result.</p>
-      </div>
-      <div class="ritual-block reveal d3">
-        <span class="ritual-block-tag">Persistence</span>
-        <p>NANZE is formulated to leave a field, not a trail. The molecular weight of each accord is calibrated to linger in the space you've occupied — a presence that outlasts departure.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FORMULA ─────────────────────────────────────────────── -->
-  <section id="formula" aria-labelledby="formula-title">
-    <div class="formula-head reveal">
-      <span class="section-eyebrow" id="formula-title">02 — Formula</span>
-    </div>
-
-    <div class="formula-scroll" role="region" aria-label="Ingredient list, scroll horizontally">
-      <div class="elements-row">
-        <div class="element reveal">    <span class="el-num">01</span><span class="el-sym">Od</span><span class="el-name">Oud</span><span class="el-origin">Somalian</span></div>
-        <div class="element reveal d1"> <span class="el-num">02</span><span class="el-sym">Mk</span><span class="el-name">White Musk</span><span class="el-origin">Synthetic</span></div>
-        <div class="element reveal d2"> <span class="el-num">03</span><span class="el-sym">Bg</span><span class="el-name">Bergamot</span><span class="el-origin">Calabrian</span></div>
-        <div class="element reveal d3"> <span class="el-num">04</span><span class="el-sym">Am</span><span class="el-name">Amber</span><span class="el-origin">Baltic</span></div>
-        <div class="element reveal d4"> <span class="el-num">05</span><span class="el-sym">Vt</span><span class="el-name">Violet</span><span class="el-origin">Synthetic</span></div>
-        <div class="element reveal">    <span class="el-num">06</span><span class="el-sym">Cd</span><span class="el-name">Cedar</span><span class="el-origin">Virginian</span></div>
-        <div class="element reveal d1"> <span class="el-num">07</span><span class="el-sym">Oz</span><span class="el-name">Ozone</span><span class="el-origin">Molecular</span></div>
-        <div class="element reveal d2"> <span class="el-num">08</span><span class="el-sym">Ir</span><span class="el-name">Iron Mineral</span><span class="el-origin">Ethiopian</span></div>
-        <div class="element reveal d3"> <span class="el-num">09</span><span class="el-sym">Sv</span><span class="el-name">Silver Cedar</span><span class="el-origin">Atlas</span></div>
-        <div class="element reveal d4"> <span class="el-num">10</span><span class="el-sym">Rn</span><span class="el-name">Static Rain</span><span class="el-origin">Synthetic</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ─────────────────────────────────────────────── -->
-  <footer>
-    <div class="footer-wordmark" aria-label="NANZE">NANZE</div>
-    <ul class="footer-nav" aria-label="Footer navigation">
-      <li><a href="#collection">Collection</a></li>
-      <li><a href="#ritual">Philosophy</a></li>
+      <li><a href="#manifesto">Philosophy</a></li>
       <li><a href="#formula">Formula</a></li>
       <li><a href="#">Stockists</a></li>
       <li><a href="#">Press</a></li>
-      <li><a href="#">Contact</a></li>
     </ul>
-    <p class="footer-tagline">The Scent of What's Next</p>
-    <p class="footer-copy">© 2089 NANZE. All rights reserved across all known timelines.</p>
-  </footer>
-
-  <!-- ── CART OVERLAY + DRAWER ─────────────────────────────── -->
-  <div class="overlay" id="overlay" aria-hidden="true"></div>
-
-  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
-    <div class="drawer-header">
-      <h2 class="drawer-title">Your Selection</h2>
-      <button class="drawer-close" id="drawerClose" aria-label="Close cart">×</button>
-    </div>
-    <div class="drawer-items" id="drawerItems">
-      <p class="drawer-empty" id="drawerEmpty">No items selected.</p>
-    </div>
-    <div class="drawer-foot">
-      <div class="drawer-total">
-        <span class="drawer-total-label">Total</span>
-        <span class="drawer-total-amt" id="drawerTotal">€0</span>
-      </div>
-      <button class="checkout-btn">Proceed to Checkout</button>
-    </div>
+    <span class="footer-tl">The Scent of What's Next</span>
   </div>
+  <p class="footer-cp">© NANZE 2089 — ALL FREQUENCIES RESERVED</p>
+</footer>
 
-  <script>
-    // ── PARTICLES ──────────────────────────────────────────
-    const pWrap = document.getElementById('particles');
-    for (let i = 0; i < 20; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.cssText = `
-        left: ${Math.random() * 100}%;
-        top: ${50 + Math.random() * 60}%;
-        animation-duration: ${9 + Math.random() * 14}s;
-        animation-delay: ${-Math.random() * 20}s;
-      `;
-      pWrap.appendChild(p);
-    }
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" aria-hidden="true"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+  <div class="dr-header">
+    <h2 class="dr-title">Your Selection</h2>
+    <button class="dr-close" id="drClose" aria-label="Close cart">×</button>
+  </div>
+  <div class="dr-items" id="drItems">
+    <p class="dr-empty" id="drEmpty">No items selected.</p>
+  </div>
+  <div class="dr-foot">
+    <div class="dr-total">
+      <span class="dr-total-lbl">Total</span>
+      <span class="dr-total-amt" id="drTotal">€0</span>
+    </div>
+    <button class="btn-checkout">Proceed to Checkout</button>
+  </div>
+</div>
 
-    // ── SCROLL REVEAL ──────────────────────────────────────
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+<script>
+  /* particles */
+  const pw = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `left:${Math.random()*100}%;top:${50+Math.random()*55}%;` +
+      `animation-duration:${9+Math.random()*14}s;animation-delay:${-Math.random()*22}s;`;
+    pw.appendChild(p);
+  }
 
-    // ── CHROMATIC ABERRATION (RITUAL TEXT) ─────────────────
-    const ritual     = document.getElementById('ritual');
-    const statement  = ritual.querySelector('.ritual-statement');
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const rect = ritual.getBoundingClientRect();
-          const prog = Math.max(0, Math.min(1, -rect.top / (window.innerHeight * 0.6)));
-          const o    = prog * 5;
-          statement.style.textShadow = o > 0.2
-            ? `${o}px 0 rgba(255,111,216,0.65), -${o}px 0 rgba(128,255,232,0.65)`
-            : 'none';
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+  /* scroll reveal */
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // ── CART ───────────────────────────────────────────────
-    let cart = [];
-
-    const cartPill    = document.getElementById('cartPill');
-    const cartBadge   = document.getElementById('cartBadge');
-    const overlay     = document.getElementById('overlay');
-    const drawer      = document.getElementById('drawer');
-    const drawerClose = document.getElementById('drawerClose');
-    const drawerItems = document.getElementById('drawerItems');
-    const drawerEmpty = document.getElementById('drawerEmpty');
-    const drawerTotal = document.getElementById('drawerTotal');
-
-    function openDrawer() {
-      overlay.classList.add('open');
-      drawer.classList.add('open');
-      overlay.setAttribute('aria-hidden', 'false');
-      drawerClose.focus();
-    }
-
-    function closeDrawer() {
-      overlay.classList.remove('open');
-      drawer.classList.remove('open');
-      overlay.setAttribute('aria-hidden', 'true');
-      cartPill.focus();
-    }
-
-    cartPill.addEventListener('click', openDrawer);
-    drawerClose.addEventListener('click', closeDrawer);
-    overlay.addEventListener('click', closeDrawer);
-    drawer.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
-
-    function renderCart() {
-      const qty   = cart.reduce((s, i) => s + i.qty, 0);
-      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-
-      cartBadge.textContent     = qty;
-      cartBadge.style.display   = qty > 0 ? 'flex' : 'none';
-      drawerTotal.textContent   = '€' + total;
-      drawerEmpty.style.display = cart.length ? 'none' : 'block';
-
-      // Clear old items
-      drawerItems.querySelectorAll('.drawer-item').forEach(el => el.remove());
-
-      cart.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'drawer-item';
-        div.innerHTML = `
-          <div>
-            <div class="drawer-item-name">${item.name}</div>
-            <div class="drawer-item-qty">Qty: ${item.qty}</div>
-          </div>
-          <div class="drawer-item-price">€${item.price * item.qty}</div>
-        `;
-        drawerItems.appendChild(div);
+  /* chromatic aberration on manifesto headline */
+  const manifesto = document.getElementById('manifesto');
+  const mhl = manifesto.querySelector('.manifesto-hl');
+  let raf = false;
+  window.addEventListener('scroll', () => {
+    if (!raf) {
+      requestAnimationFrame(() => {
+        const r = manifesto.getBoundingClientRect();
+        const p = Math.max(0, Math.min(1, -r.top / (window.innerHeight * .6)));
+        const o = p * 4;
+        mhl.style.textShadow = o > .3
+          ? `${o}px 0 rgba(255,60,0,.45), -${o}px 0 rgba(0,100,255,.45)` : 'none';
+        raf = false;
       });
+      raf = true;
     }
+  }, { passive: true });
 
-    document.querySelectorAll('.btn-cart').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const name  = btn.dataset.name;
-        const price = parseInt(btn.dataset.price, 10);
-        const hit   = cart.find(i => i.name === name);
-        hit ? hit.qty++ : cart.push({ name, price, qty: 1 });
-        renderCart();
+  /* cart */
+  let cart = [];
+  const pill    = document.getElementById('cartPill');
+  const badge   = document.getElementById('cartBadge');
+  const overlay = document.getElementById('overlay');
+  const drawer  = document.getElementById('drawer');
+  const drClose = document.getElementById('drClose');
+  const drItems = document.getElementById('drItems');
+  const drEmpty = document.getElementById('drEmpty');
+  const drTotal = document.getElementById('drTotal');
 
-        // Momentary confirmation state
-        const orig = btn.textContent;
-        btn.textContent = 'Added ✓';
-        btn.style.borderColor = 'var(--teal)';
-        btn.style.color = 'var(--teal)';
-        setTimeout(() => {
-          btn.textContent = orig;
-          btn.style.borderColor = '';
-          btn.style.color = '';
-        }, 1600);
+  const open  = () => { overlay.classList.add('open');  drawer.classList.add('open');  overlay.setAttribute('aria-hidden','false'); drClose.focus(); };
+  const close = () => { overlay.classList.remove('open'); drawer.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); pill.focus(); };
 
-        openDrawer();
-      });
+  pill.addEventListener('click', open);
+  drClose.addEventListener('click', close);
+  overlay.addEventListener('click', close);
+  drawer.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+  function render() {
+    const qty   = cart.reduce((s,i) => s + i.qty, 0);
+    const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+    badge.textContent = qty;
+    badge.style.display = qty > 0 ? 'flex' : 'none';
+    drTotal.textContent = '€' + total;
+    drEmpty.style.display = cart.length ? 'none' : 'block';
+    drItems.querySelectorAll('.dr-item').forEach(el => el.remove());
+    cart.forEach(item => {
+      const d = document.createElement('div');
+      d.className = 'dr-item';
+      d.innerHTML = `<div><div class="dr-item-name">${item.name}</div><div class="dr-item-qty">Qty: ${item.qty}</div></div>` +
+                    `<div class="dr-item-price">€${item.price * item.qty}</div>`;
+      drItems.appendChild(d);
     });
+  }
 
-    renderCart();
-  </script>
+  document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const name = btn.dataset.name, price = +btn.dataset.price;
+      const hit = cart.find(i => i.name === name);
+      hit ? hit.qty++ : cart.push({ name, price, qty: 1 });
+      render();
+      const orig = btn.textContent;
+      btn.textContent = 'Added ✓';
+      btn.style.borderColor = 'var(--teal)'; btn.style.color = 'var(--teal)';
+      setTimeout(() => { btn.textContent = orig; btn.style.borderColor = ''; btn.style.color = ''; }, 1500);
+      open();
+    });
+  });
+
+  render();
+</script>
 </body>
 </html>
