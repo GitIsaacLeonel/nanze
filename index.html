@@ -10,12 +10,12 @@
 <style>
 /* ── TOKENS ──────────────────────────────────────────────── */
 :root {
-  --bg:      #050508;
-  --surface: #0C0C14;
-  --violet:  #C8A8FF;
-  --teal:    #80FFE8;
-  --pink:    #FF6FD8;
-  --text:    #F0EEF8;
+  --bg:      #FAFAF9;
+  --surface: #F5F5F3;
+  --violet:  #9966CC;
+  --teal:    #00A89F;
+  --pink:    #E91E63;
+  --text:    #1A1A1A;
   --muted:   #6B6880;
   --gold:    #B8972A;
   --ff-disp: 'Space Grotesk', sans-serif;
@@ -49,6 +49,8 @@ nav {
   z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 28px 48px;
+  background: rgba(250,250,249,.85); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,.06);
 }
 .nav-logo {
   font-family: var(--ff-disp); font-size: 18px; font-weight: 700;
@@ -66,17 +68,17 @@ nav {
 .cart-pill {
   position: fixed; top: 22px; right: 48px; z-index: 101;
   display: flex; align-items: center; gap: 10px;
-  background: rgba(12,12,20,.75); backdrop-filter: blur(12px);
-  border: 1px solid rgba(200,168,255,.2); border-radius: 100px;
+  background: rgba(250,250,249,.8); backdrop-filter: blur(12px);
+  border: 1px solid rgba(153,102,204,.2); border-radius: 100px;
   padding: 10px 22px;
   font-family: var(--ff-mono); font-size: 10px; letter-spacing: .15em;
   color: var(--text); cursor: pointer;
   transition: border-color .3s, background .3s;
 }
-.cart-pill:hover { border-color: var(--violet); background: rgba(200,168,255,.06); }
+.cart-pill:hover { border-color: var(--violet); background: rgba(153,102,204,.08); }
 .cart-pill svg { width: 15px; height: 15px; }
 .cart-badge {
-  background: var(--violet); color: var(--bg);
+  background: var(--violet); color: #fff;
   border-radius: 50%; width: 18px; height: 18px;
   display: none; align-items: center; justify-content: center;
   font-size: 9px; font-weight: 700;
@@ -86,18 +88,18 @@ nav {
 #hero {
   position: relative; height: 100vh;
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
+  overflow: hidden; background: linear-gradient(135deg, #fff 0%, #F8F8F6 100%);
 }
 #particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .particle {
   position: absolute; width: 2px; height: 2px;
-  border-radius: 50%; background: var(--text); opacity: .2;
+  border-radius: 50%; background: var(--text); opacity: .08;
   animation: drift linear infinite;
 }
 @keyframes drift {
   0%   { transform: translateY(100vh); opacity: 0; }
-  10%  { opacity: .2; }
-  90%  { opacity: .1; }
+  10%  { opacity: .08; }
+  90%  { opacity: .04; }
   100% { transform: translateY(-20px); opacity: 0; }
 }
 .orb-stage {
@@ -108,7 +110,7 @@ nav {
 .orb {
   width: min(400px,65vw); height: min(400px,65vw);
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  background: radial-gradient(ellipse at 40% 38%, #C8A8FF 0%, #4A1A90 45%, #050508 100%);
+  background: radial-gradient(ellipse at 40% 38%, #9966CC 0%, #6B4C9A 45%, #E8E8E6 100%);
   animation: orb-morph 10s ease-in-out infinite,
              orb-glow   5s ease-in-out infinite,
              orb-color 10s ease-in-out infinite;
@@ -121,14 +123,14 @@ nav {
   100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
 }
 @keyframes orb-glow {
-  0%,100%{ box-shadow: 0 0 80px 25px rgba(200,168,255,.4), 0 0 200px 70px rgba(200,168,255,.1); }
-  33%    { box-shadow: 0 0 80px 25px rgba(128,255,232,.4), 0 0 200px 70px rgba(128,255,232,.1); }
-  66%    { box-shadow: 0 0 80px 25px rgba(255,111,216,.4), 0 0 200px 70px rgba(255,111,216,.1); }
+  0%,100%{ box-shadow: 0 0 80px 25px rgba(153,102,204,.25), 0 0 200px 70px rgba(153,102,204,.08); }
+  33%    { box-shadow: 0 0 80px 25px rgba(0,168,159,.25), 0 0 200px 70px rgba(0,168,159,.08); }
+  66%    { box-shadow: 0 0 80px 25px rgba(233,30,99,.25), 0 0 200px 70px rgba(233,30,99,.08); }
 }
 @keyframes orb-color {
-  0%,100%{ background: radial-gradient(ellipse at 40% 38%, #C8A8FF 0%, #4A1A90 45%, #050508 100%); }
-  33%    { background: radial-gradient(ellipse at 60% 38%, #80FFE8 0%, #1A5040 45%, #050508 100%); }
-  66%    { background: radial-gradient(ellipse at 40% 62%, #FF6FD8 0%, #701040 45%, #050508 100%); }
+  0%,100%{ background: radial-gradient(ellipse at 40% 38%, #9966CC 0%, #6B4C9A 45%, #E8E8E6 100%); }
+  33%    { background: radial-gradient(ellipse at 60% 38%, #00A89F 0%, #006B66 45%, #E8E8E6 100%); }
+  66%    { background: radial-gradient(ellipse at 40% 62%, #E91E63 0%, #9B1453 45%, #E8E8E6 100%); }
 }
 .hero-content {
   position: relative; z-index: 2;
@@ -139,13 +141,13 @@ nav {
   font-family: var(--ff-disp);
   font-size: clamp(80px,14vw,160px);
   font-weight: 700; letter-spacing: .3em; line-height: 1;
-  color: var(--text); mix-blend-mode: overlay;
+  color: var(--text); mix-blend-mode: multiply;
   pointer-events: none; user-select: none;
 }
 .hero-tag {
   font-family: var(--ff-mono); font-size: 13px;
   letter-spacing: .3em; text-transform: uppercase;
-  color: var(--text); opacity: .75;
+  color: var(--muted);
 }
 .hero-cta {
   position: relative; display: inline-block;
@@ -166,7 +168,7 @@ nav {
   mask-composite: exclude;
   animation: border-spin 3s linear infinite;
 }
-.hero-cta:hover { color: #fff; text-shadow: 0 0 20px rgba(200,168,255,.8); }
+.hero-cta:hover { color: var(--violet); text-shadow: 0 0 12px rgba(153,102,204,.4); }
 @keyframes border-spin {
   0%   { background-position: 0% 50%; }
   100% { background-position: 300% 50%; }
@@ -202,6 +204,8 @@ nav {
 .d2 { transition-delay: .2s; }
 .d3 { transition-delay: .3s; }
 .d4 { transition-delay: .4s; }
+.d5 { transition-delay: .5s; }
+.d6 { transition-delay: .6s; }
 
 /* ── COLLECTION ──────────────────────────────────────────── */
 #collection { padding: 140px 48px; background: var(--bg); }
@@ -209,19 +213,23 @@ nav {
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  gap: 20px; max-width: 1200px; margin: 0 auto;
+  gap: 32px; max-width: 1400px; margin: 0 auto;
 }
 .product-card {
-  background: rgba(12,12,20,.8);
-  border: .5px solid rgba(255,255,255,.08);
-  border-radius: 4px;
+  background: var(--surface);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 8px;
   padding: 48px 28px 36px;
   display: flex; flex-direction: column; align-items: center; gap: 18px;
   position: relative;
-  transition: transform .45s cubic-bezier(.16,1,.3,1);
+  transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s;
   overflow: visible;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
 }
-.product-card:hover { transform: translateY(-6px); }
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.12);
+}
 
 /* bottle stage */
 .bottle-stage {
@@ -233,10 +241,10 @@ nav {
   position: absolute; bottom: 0; left: 50%;
   transform: translateX(-50%);
   width: 70px; height: 14px; border-radius: 50%;
-  filter: blur(16px); opacity: .45;
+  filter: blur(16px); opacity: .3;
   transition: opacity .4s, width .4s;
 }
-.product-card:hover .bottle-glow { opacity: .85; width: 95px; }
+.product-card:hover .bottle-glow { opacity: .5; width: 95px; }
 .gv { background: var(--violet); }
 .gt { background: var(--teal); }
 .gp { background: var(--pink); }
@@ -253,12 +261,12 @@ nav {
 .be { animation: fe 7s ease-in-out infinite; }
 
 .product-card:hover .bottle {
-  filter: drop-shadow(0 0 18px rgba(200,168,255,.35));
+  filter: drop-shadow(0 0 18px rgba(153,102,204,.25));
   transition: filter .4s;
 }
-.product-card:hover .bv { filter: drop-shadow(0 0 22px rgba(200,168,255,.5)); }
-.product-card:hover .bf { filter: drop-shadow(0 0 22px rgba(128,255,232,.5)); }
-.product-card:hover .be { filter: drop-shadow(0 0 22px rgba(255,111,216,.5)); }
+.product-card:hover .bv { filter: drop-shadow(0 0 22px rgba(153,102,204,.35)); }
+.product-card:hover .bf { filter: drop-shadow(0 0 22px rgba(0,168,159,.35)); }
+.product-card:hover .be { filter: drop-shadow(0 0 22px rgba(233,30,99,.35)); }
 
 /* product text */
 .product-info { text-align: center; display: flex; flex-direction: column; gap: 8px; }
@@ -276,7 +284,7 @@ nav {
 /* CTA hidden, slides up on hover */
 .btn-add {
   background: transparent;
-  border: 1px solid rgba(200,168,255,.3); border-radius: 100px;
+  border: 1px solid rgba(153,102,204,.3); border-radius: 100px;
   padding: 11px 28px;
   font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em;
   text-transform: uppercase; color: var(--text); cursor: pointer;
@@ -289,7 +297,7 @@ nav {
 
 /* ── MANIFESTO ───────────────────────────────────────────── */
 #manifesto {
-  padding: 160px 48px; background: var(--surface);
+  padding: 160px 48px; background: #F0F0ED;
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 100px; align-items: center;
 }
@@ -303,9 +311,9 @@ nav {
 .phil-blocks { display: flex; flex-direction: column; }
 .phil-block {
   padding: 28px 0;
-  border-top: 1px solid rgba(255,255,255,.05);
+  border-top: 1px solid rgba(0,0,0,.08);
 }
-.phil-block:last-child { border-bottom: 1px solid rgba(255,255,255,.05); }
+.phil-block:last-child { border-bottom: 1px solid rgba(0,0,0,.08); }
 .phil-tag {
   font-family: var(--ff-mono); font-size: 9px; letter-spacing: .3em;
   text-transform: uppercase; color: var(--teal);
@@ -321,24 +329,28 @@ nav {
 .el-row { display: flex; gap: 12px; min-width: max-content; }
 .el {
   width: 90px; height: 90px; border-radius: 8px;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(0,0,0,.1);
   padding: 11px; position: relative;
   display: flex; flex-direction: column; flex-shrink: 0;
   transition: border-color .3s, background .3s;
+  background: var(--surface);
 }
-.el:hover { border-color: rgba(200,168,255,.35); background: rgba(200,168,255,.03); }
-.el-n { position: absolute; top: 7px; right: 9px; font-family: var(--ff-mono); font-size: 7px; color: var(--muted); opacity: .4; }
+.el:hover { border-color: rgba(153,102,204,.35); background: rgba(153,102,204,.03); }
+.el-n { position: absolute; top: 7px; right: 9px; font-family: var(--ff-mono); font-size: 7px; color: var(--muted); opacity: .5; }
 .el-s { font-family: var(--ff-disp); font-size: 22px; font-weight: 700; color: var(--text); line-height: 1; }
 .el-nm { font-family: var(--ff-mono); font-size: 7.5px; color: var(--muted); margin-top: 5px; line-height: 1.3; }
-.el-or { font-family: var(--ff-mono); font-size: 6.5px; color: var(--violet); margin-top: auto; opacity: .65; }
+.el-or { font-family: var(--ff-mono); font-size: 6.5px; color: var(--violet); margin-top: auto; opacity: .75; }
 
 /* ── FOOTER ──────────────────────────────────────────────── */
-footer { padding: 64px 48px 48px; background: var(--bg); }
+footer {
+  padding: 64px 48px 48px; background: #F0F0ED;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
 .footer-row {
   display: flex; align-items: center;
   justify-content: space-between; margin-bottom: 40px;
 }
-.footer-wm { font-family: var(--ff-disp); font-size: 22px; font-weight: 700; letter-spacing: .4em; color: var(--text); opacity: .2; }
+.footer-wm { font-family: var(--ff-disp); font-size: 22px; font-weight: 700; letter-spacing: .4em; color: var(--text); opacity: .15; }
 .footer-nav { display: flex; gap: 32px; list-style: none; }
 .footer-nav a {
   font-family: var(--ff-mono); font-size: 9px; letter-spacing: .2em;
@@ -346,20 +358,20 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
   transition: color .3s;
 }
 .footer-nav a:hover { color: var(--violet); }
-.footer-tl { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .1em; color: var(--muted); opacity: .4; }
-.footer-cp { text-align: center; font-family: var(--ff-mono); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); opacity: .22; }
+.footer-tl { font-family: var(--ff-mono); font-size: 9px; letter-spacing: .1em; color: var(--muted); opacity: .6; }
+.footer-cp { text-align: center; font-family: var(--ff-mono); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); opacity: .4; }
 
 /* ── CART DRAWER ─────────────────────────────────────────── */
 .overlay {
   position: fixed; inset: 0;
-  background: rgba(5,5,8,.72); backdrop-filter: blur(6px);
+  background: rgba(26,26,26,.55); backdrop-filter: blur(6px);
   z-index: 200; opacity: 0; pointer-events: none; transition: opacity .35s;
 }
 .overlay.open { opacity: 1; pointer-events: all; }
 .drawer {
   position: fixed; top: 0; right: 0; bottom: 0;
   width: min(420px,100vw); background: var(--surface);
-  border-left: 1px solid rgba(200,168,255,.1);
+  border-left: 1px solid rgba(0,0,0,.1);
   z-index: 201; transform: translateX(100%);
   transition: transform .45s cubic-bezier(.16,1,.3,1);
   display: flex; flex-direction: column; padding: 40px 36px;
@@ -371,11 +383,11 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
 .dr-close:hover { color: var(--text); }
 .dr-items { flex: 1; overflow-y: auto; }
 .dr-empty { font-family: var(--ff-mono); font-size: 11px; letter-spacing: .1em; color: var(--muted); text-align: center; margin-top: 80px; }
-.dr-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+.dr-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.05); }
 .dr-item-name { font-family: var(--ff-disp); font-size: 13px; font-weight: 500; letter-spacing: .1em; }
 .dr-item-qty { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); margin-top: 3px; }
 .dr-item-price { font-family: var(--ff-disp); font-size: 15px; color: var(--violet); }
-.dr-foot { margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.06); }
+.dr-foot { margin-top: 28px; padding-top: 22px; border-top: 1px solid rgba(0,0,0,.08); }
 .dr-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
 .dr-total-lbl { font-family: var(--ff-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
 .dr-total-amt { font-family: var(--ff-disp); font-size: 22px; font-weight: 700; }
@@ -384,7 +396,7 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
   background: linear-gradient(135deg, var(--violet) 0%, var(--pink) 100%);
   border: none; border-radius: 100px;
   font-family: var(--ff-mono); font-size: 10px; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--bg); font-weight: 700; cursor: pointer;
+  text-transform: uppercase; color: #fff; font-weight: 700; cursor: pointer;
   transition: opacity .3s, transform .2s;
 }
 .btn-checkout:hover { opacity: .88; transform: scale(1.01); }
@@ -452,71 +464,42 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
     <article class="product-card reveal d1">
       <div class="bottle-stage">
         <div class="bottle-glow gv"></div>
-
         <svg class="bottle bv" viewBox="0 0 72 218" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <linearGradient id="vBody" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stop-color="#1E1E32"/>
-              <stop offset="100%" stop-color="#111120"/>
+              <stop offset="0%"   stop-color="#2A2A3A"/>
+              <stop offset="100%" stop-color="#1A1A28"/>
             </linearGradient>
             <linearGradient id="vStreak" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#C8A8FF" stop-opacity=".9"/>
-              <stop offset="45%"  stop-color="#C8A8FF" stop-opacity=".25"/>
-              <stop offset="100%" stop-color="#C8A8FF" stop-opacity="0"/>
+              <stop offset="0%"   stop-color="#9966CC" stop-opacity=".7"/>
+              <stop offset="45%"  stop-color="#9966CC" stop-opacity=".15"/>
+              <stop offset="100%" stop-color="#9966CC" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="vShine" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#fff" stop-opacity=".13"/>
+              <stop offset="0%"   stop-color="#fff" stop-opacity=".08"/>
               <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="vCap" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#18182A"/>
-              <stop offset="100%" stop-color="#0A0A16"/>
+              <stop offset="0%"   stop-color="#252530"/>
+              <stop offset="100%" stop-color="#16161F"/>
             </linearGradient>
           </defs>
-
-          <!-- cap -->
-          <rect x="1" y="1" width="70" height="20" rx="1.5"
-                fill="url(#vCap)" stroke="#B8972A" stroke-width=".5"/>
+          <rect x="1" y="1" width="70" height="20" rx="1.5" fill="url(#vCap)" stroke="#B8972A" stroke-width=".5"/>
           <rect x="4" y="4" width="64" height="2" rx=".5" fill="#fff" fill-opacity=".04"/>
-          <!-- cap-to-body ledge -->
           <rect x="10" y="18" width="52" height="6" fill="#0E0E1C"/>
-
-          <!-- body — top-right corner clipped at 45° -->
-          <path d="M 4,24 L 55,24 L 70,39 L 70,212 L 4,212 Z"
-                fill="url(#vBody)" stroke="#B8972A" stroke-width=".5"/>
-
-          <!-- purple streak left -->
+          <path d="M 4,24 L 55,24 L 70,39 L 70,212 L 4,212 Z" fill="url(#vBody)" stroke="#B8972A" stroke-width=".5"/>
           <path d="M 4,24 L 19,24 L 19,212 L 4,212 Z" fill="url(#vStreak)"/>
-
-          <!-- glass shine left edge -->
           <path d="M 4,24 L 13,24 L 13,212 L 4,212 Z" fill="url(#vShine)"/>
-
-          <!-- liquid fill strip right -->
           <path d="M 63,39 L 70,39 L 70,212 L 63,212 Z" fill="#3D0066" fill-opacity=".72"/>
           <path d="M 63,39 L 66,39 L 66,212 L 63,212 Z" fill="#9900DD" fill-opacity=".25"/>
-
-          <!-- frosted label -->
-          <rect x="9" y="88" width="47" height="80" rx="1"
-                fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".07" stroke-width=".3"/>
-
-          <!-- N logo — outline only -->
-          <text x="33" y="143" font-family="monospace" font-size="20"
-                fill="none" stroke="#fff" stroke-width=".75" stroke-opacity=".55"
-                text-anchor="middle" dominant-baseline="middle">N</text>
-
-          <!-- VOID label -->
-          <text x="33" y="161" font-family="monospace" font-size="6.5"
-                fill="#fff" fill-opacity=".45" text-anchor="middle" letter-spacing="3.5">VOID</text>
-
-          <!-- bottom gold line -->
+          <rect x="9" y="88" width="47" height="80" rx="1" fill="#fff" fill-opacity=".055" stroke="#fff" stroke-opacity=".07" stroke-width=".3"/>
+          <text x="33" y="143" font-family="monospace" font-size="20" fill="none" stroke="#fff" stroke-width=".75" stroke-opacity=".55" text-anchor="middle" dominant-baseline="middle">N</text>
+          <text x="33" y="161" font-family="monospace" font-size="6.5" fill="#fff" fill-opacity=".45" text-anchor="middle" letter-spacing="3.5">VOID</text>
           <line x1="4" y1="211" x2="70" y2="211" stroke="#B8972A" stroke-opacity=".5" stroke-width=".3"/>
-          <!-- left highlight -->
           <line x1="4.3" y1="24" x2="4.3" y2="212" stroke="#fff" stroke-opacity=".1" stroke-width=".4"/>
-          <!-- clip edge line -->
           <line x1="55" y1="24" x2="70" y2="39" stroke="#B8972A" stroke-width=".5"/>
         </svg>
       </div>
-
       <div class="product-info">
         <span class="p-label">Formula 01 · 50 ML</span>
         <h3 class="p-name">NANZE VOID</h3>
@@ -530,24 +513,23 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
     <article class="product-card reveal d2">
       <div class="bottle-stage">
         <div class="bottle-glow gt"></div>
-
         <svg class="bottle bf" viewBox="0 0 96 236" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <radialGradient id="fGlow" cx="50%" cy="43%" r="50%">
-              <stop offset="0%"   stop-color="#0AFFD2" stop-opacity=".55"/>
-              <stop offset="38%"  stop-color="#0A3050" stop-opacity=".7"/>
-              <stop offset="100%" stop-color="#050525" stop-opacity=".95"/>
+              <stop offset="0%"   stop-color="#00A89F" stop-opacity=".45"/>
+              <stop offset="38%"  stop-color="#0A3050" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#050525" stop-opacity=".75"/>
             </radialGradient>
             <radialGradient id="fGlow2" cx="35%" cy="33%" r="42%">
-              <stop offset="0%"   stop-color="#fff" stop-opacity=".2"/>
+              <stop offset="0%"   stop-color="#fff" stop-opacity=".15"/>
               <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
             </radialGradient>
             <linearGradient id="fCap" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%"   stop-color="#80FFE8"/>
-              <stop offset="100%" stop-color="#FF6FD8"/>
+              <stop offset="0%"   stop-color="#00A89F"/>
+              <stop offset="100%" stop-color="#E91E63"/>
             </linearGradient>
             <linearGradient id="fCapS" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#fff" stop-opacity=".38"/>
+              <stop offset="0%"   stop-color="#fff" stop-opacity=".28"/>
               <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="fNeck" x1="0" y1="0" x2="0" y2="1">
@@ -555,50 +537,23 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
               <stop offset="100%" stop-color="#081320"/>
             </linearGradient>
             <pattern id="fScan" x="0" y="0" width="96" height="4" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="96" y2="0" stroke="#fff" stroke-width=".45" stroke-opacity=".08"/>
+              <line x1="0" y1="0" x2="96" y2="0" stroke="#fff" stroke-width=".45" stroke-opacity=".06"/>
             </pattern>
-            <clipPath id="fClip">
-              <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z"/>
-            </clipPath>
-            <clipPath id="fCapClip">
-              <ellipse cx="48" cy="21" rx="19" ry="21"/>
-            </clipPath>
           </defs>
-
-          <!-- dome cap -->
           <ellipse cx="48" cy="21" rx="19" ry="21" fill="url(#fCap)" opacity=".88"/>
-          <path d="M 29,21 C 29,0 67,0 67,21" fill="url(#fCapS)" clip-path="url(#fCapClip)"/>
+          <path d="M 29,21 C 29,0 67,0 67,21" fill="url(#fCapS)"/>
           <ellipse cx="42" cy="13" rx="6" ry="4" fill="#fff" fill-opacity=".26" transform="rotate(-12,42,13)"/>
-
-          <!-- neck -->
           <path d="M 38,39 L 40,58 L 56,58 L 58,39 Z" fill="url(#fNeck)"/>
-          <line x1="38" y1="39" x2="40" y2="58" stroke="#0AFFD2" stroke-opacity=".28" stroke-width=".4"/>
-          <line x1="58" y1="39" x2="56" y2="58" stroke="#0AFFD2" stroke-opacity=".28" stroke-width=".4"/>
-
-          <!-- body -->
-          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z"
-                fill="url(#fGlow)"/>
-          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z"
-                fill="url(#fGlow2)"/>
-
-          <!-- scanlines -->
-          <rect x="0" y="56" width="96" height="168" fill="url(#fScan)" clip-path="url(#fClip)"/>
-
-          <!-- left edge teal glow line -->
-          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222"
-                stroke="#0AFFD2" stroke-opacity=".3" stroke-width=".8" fill="none"/>
-
-          <!-- N logo teal -->
-          <text x="48" y="148" font-family="monospace" font-size="18"
-                fill="none" stroke="#80FFE8" stroke-width=".75" stroke-opacity=".65"
-                text-anchor="middle" dominant-baseline="middle">N</text>
-
-          <!-- FLUX label -->
-          <text x="48" y="165" font-family="monospace" font-size="6.5"
-                fill="#80FFE8" fill-opacity=".65" text-anchor="middle" letter-spacing="3.5">FLUX</text>
+          <line x1="38" y1="39" x2="40" y2="58" stroke="#00A89F" stroke-opacity=".28" stroke-width=".4"/>
+          <line x1="58" y1="39" x2="56" y2="58" stroke="#00A89F" stroke-opacity=".28" stroke-width=".4"/>
+          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z" fill="url(#fGlow)"/>
+          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222 L 65,222 C 75,206 89,170 89,134 C 89,100 78,70 56,58 Z" fill="url(#fGlow2)"/>
+          <rect x="0" y="56" width="96" height="168" fill="url(#fScan)"/>
+          <path d="M 40,58 C 18,70 7,100 7,134 C 7,170 21,206 31,222" stroke="#00A89F" stroke-opacity=".3" stroke-width=".8" fill="none"/>
+          <text x="48" y="148" font-family="monospace" font-size="18" fill="none" stroke="#00A89F" stroke-width=".75" stroke-opacity=".65" text-anchor="middle" dominant-baseline="middle">N</text>
+          <text x="48" y="165" font-family="monospace" font-size="6.5" fill="#00A89F" fill-opacity=".65" text-anchor="middle" letter-spacing="3.5">FLUX</text>
         </svg>
       </div>
-
       <div class="product-info">
         <span class="p-label">Formula 02 · 50 ML</span>
         <h3 class="p-name">NANZE FLUX</h3>
@@ -612,7 +567,6 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
     <article class="product-card reveal d3">
       <div class="bottle-stage">
         <div class="bottle-glow gp"></div>
-
         <svg class="bottle be" viewBox="0 0 88 228" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <linearGradient id="eBody" x1="0" y1="1" x2="1" y2="0">
@@ -620,9 +574,9 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
               <stop offset="100%" stop-color="#22091A"/>
             </linearGradient>
             <linearGradient id="ePink" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#FF6FD8" stop-opacity=".52"/>
-              <stop offset="45%"  stop-color="#FF6FD8" stop-opacity=".14"/>
-              <stop offset="100%" stop-color="#FF6FD8" stop-opacity="0"/>
+              <stop offset="0%"   stop-color="#E91E63" stop-opacity=".52"/>
+              <stop offset="45%"  stop-color="#E91E63" stop-opacity=".14"/>
+              <stop offset="100%" stop-color="#E91E63" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="eShine" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%"   stop-color="#fff" stop-opacity=".09"/>
@@ -637,64 +591,28 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
               <stop offset="0%"   stop-color="#3C1028"/>
               <stop offset="100%" stop-color="#1C0814"/>
             </linearGradient>
-            <clipPath id="eClip">
-              <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"/>
-            </clipPath>
           </defs>
-
-          <!-- hex prism cap: 3 visible faces -->
-          <!-- front face -->
           <rect x="16" y="10" width="54" height="24" fill="url(#eCap)"/>
-          <!-- top face (perspective) -->
           <polygon points="16,10 70,10 76,4 22,4" fill="url(#eCapT)"/>
-          <!-- right side face -->
           <polygon points="70,10 76,4 76,28 70,34" fill="#0C040A" fill-opacity=".9"/>
-          <!-- cap outlines -->
-          <polygon points="16,10 70,10 76,4 22,4" stroke="#FF6FD8" stroke-opacity=".35" stroke-width=".4" fill="none"/>
-          <rect x="16" y="10" width="54" height="24" stroke="#FF6FD8" stroke-opacity=".3" stroke-width=".4" fill="none"/>
-          <polygon points="70,10 76,4 76,28 70,34" stroke="#FF6FD8" stroke-opacity=".25" stroke-width=".4" fill="none"/>
-          <!-- cap highlight line -->
+          <polygon points="16,10 70,10 76,4 22,4" stroke="#E91E63" stroke-opacity=".35" stroke-width=".4" fill="none"/>
+          <rect x="16" y="10" width="54" height="24" stroke="#E91E63" stroke-opacity=".3" stroke-width=".4" fill="none"/>
+          <polygon points="70,10 76,4 76,28 70,34" stroke="#E91E63" stroke-opacity=".25" stroke-width=".4" fill="none"/>
           <line x1="19" y1="13" x2="67" y2="13" stroke="#fff" stroke-opacity=".12" stroke-width=".4"/>
-
-          <!-- body: left=straight, right=S-curve -->
-          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"
-                fill="url(#eBody)"/>
-          <!-- diagonal pink slash -->
-          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"
-                fill="url(#ePink)"/>
-          <!-- glass shine left -->
-          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z"
-                fill="url(#eShine)"/>
-
-          <!-- groove 1 -->
-          <line x1="16" y1="98"  x2="80" y2="106" stroke="#FF6FD8" stroke-opacity=".22" stroke-width=".6"/>
+          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z" fill="url(#eBody)"/>
+          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z" fill="url(#ePink)"/>
+          <path d="M 16,34 L 16,218 L 60,218 C 74,200 82,168 82,130 C 82,92 74,62 70,34 Z" fill="url(#eShine)"/>
+          <line x1="16" y1="98"  x2="80" y2="106" stroke="#E91E63" stroke-opacity=".22" stroke-width=".6"/>
           <line x1="16" y1="98.6" x2="80" y2="106.6" stroke="#fff" stroke-opacity=".05" stroke-width=".3"/>
-
-          <!-- groove 2 -->
-          <line x1="16" y1="146" x2="78" y2="153" stroke="#FF6FD8" stroke-opacity=".18" stroke-width=".6"/>
+          <line x1="16" y1="146" x2="78" y2="153" stroke="#E91E63" stroke-opacity=".18" stroke-width=".6"/>
           <line x1="16" y1="146.6" x2="78" y2="153.6" stroke="#fff" stroke-opacity=".04" stroke-width=".3"/>
-
-          <!-- right edge S-curve neon line -->
-          <path d="M 70,34 C 74,62 82,92 82,130 C 82,168 74,200 60,218"
-                stroke="#FF6FD8" stroke-opacity=".38" stroke-width=".9" fill="none"/>
-
-          <!-- left edge highlight -->
+          <path d="M 70,34 C 74,62 82,92 82,130 C 82,168 74,200 60,218" stroke="#E91E63" stroke-opacity=".38" stroke-width=".9" fill="none"/>
           <line x1="16.4" y1="34" x2="16.4" y2="218" stroke="#fff" stroke-opacity=".1" stroke-width=".4"/>
-
-          <!-- star glyph -->
-          <!-- 4-point star centered at (43,154) -->
-          <path d="M 43,148 L 44.8,153 L 43,158 L 41.2,153 Z M 37,153 L 42,151.5 L 49,153 L 42,154.5 Z"
-                fill="#FF6FD8" fill-opacity=".65"/>
-
-          <!-- ECHO label -->
-          <text x="43" y="170" font-family="monospace" font-size="6.5"
-                fill="#FF6FD8" fill-opacity=".6" text-anchor="middle" letter-spacing="3.5">ECHO</text>
-
-          <!-- bottom edge -->
-          <line x1="16" y1="218" x2="60" y2="218" stroke="#FF6FD8" stroke-opacity=".28" stroke-width=".4"/>
+          <path d="M 43,148 L 44.8,153 L 43,158 L 41.2,153 Z M 37,153 L 42,151.5 L 49,153 L 42,154.5 Z" fill="#E91E63" fill-opacity=".65"/>
+          <text x="43" y="170" font-family="monospace" font-size="6.5" fill="#E91E63" fill-opacity=".6" text-anchor="middle" letter-spacing="3.5">ECHO</text>
+          <line x1="16" y1="218" x2="60" y2="218" stroke="#E91E63" stroke-opacity=".28" stroke-width=".4"/>
         </svg>
       </div>
-
       <div class="product-info">
         <span class="p-label">Formula 03 · 50 ML</span>
         <h3 class="p-name">NANZE ECHO</h3>
@@ -702,6 +620,118 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
         <p class="p-price">€185</p>
       </div>
       <button class="btn-add" data-name="NANZE ECHO" data-price="185">Add to Cart</button>
+    </article>
+
+    <!-- ── VEIL ── -->
+    <article class="product-card reveal d4">
+      <div class="bottle-stage">
+        <div class="bottle-glow gv"></div>
+        <svg class="bottle bv" viewBox="0 0 68 224" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="veilBody" x1=".5" y1="0" x2=".5" y2="1">
+              <stop offset="0%"   stop-color="#3A2A4A"/>
+              <stop offset="60%"  stop-color="#2A1A3A"/>
+              <stop offset="100%" stop-color="#1A0A2A"/>
+            </linearGradient>
+            <linearGradient id="veilGlow" x1="0" y1=".5" x2="1" y2=".5">
+              <stop offset="0%"   stop-color="#9966CC" stop-opacity="0"/>
+              <stop offset="50%"  stop-color="#9966CC" stop-opacity=".35"/>
+              <stop offset="100%" stop-color="#9966CC" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <ellipse cx="34" cy="16" rx="16" ry="18" fill="#1A1A28" stroke="#B8972A" stroke-width=".4"/>
+          <rect x="18" y="30" width="32" height="8" fill="#0E0E1C"/>
+          <path d="M 8,40 L 8,210 Q 8,220 18,224 L 50,224 Q 60,220 60,210 L 60,40 Z" fill="url(#veilBody)" stroke="#888" stroke-opacity=".15" stroke-width=".4"/>
+          <path d="M 8,40 L 8,210 Q 8,220 18,224 L 50,224 Q 60,220 60,210 L 60,40 Z" fill="url(#veilGlow)"/>
+          <ellipse cx="15" cy="120" rx="2.5" ry="40" fill="#fff" fill-opacity=".04"/>
+          <text x="34" y="152" font-family="monospace" font-size="18" fill="none" stroke="#9966CC" stroke-width=".7" stroke-opacity=".5" text-anchor="middle" dominant-baseline="middle">N</text>
+          <text x="34" y="169" font-family="monospace" font-size="6.5" fill="#9966CC" fill-opacity=".55" text-anchor="middle" letter-spacing="3">VEIL</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="p-label">Formula 04 · 50 ML</span>
+        <h3 class="p-name">NANZE VEIL</h3>
+        <p class="p-notes">Sandalwood · Patchouli · Musk</p>
+        <p class="p-price">€185</p>
+      </div>
+      <button class="btn-add" data-name="NANZE VEIL" data-price="185">Add to Cart</button>
+    </article>
+
+    <!-- ── EMBER ── -->
+    <article class="product-card reveal d5">
+      <div class="bottle-stage">
+        <div class="bottle-glow gp"></div>
+        <svg class="bottle bf" viewBox="0 0 80 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="emberBody" x1="0" y1=".5" x2="1" y2=".5">
+              <stop offset="0%"   stop-color="#1A0A10"/>
+              <stop offset="50%"  stop-color="#2A1A28"/>
+              <stop offset="100%" stop-color="#1A0A10"/>
+            </linearGradient>
+            <linearGradient id="emberFire" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#E91E63" stop-opacity=".4"/>
+              <stop offset="50%"  stop-color="#E91E63" stop-opacity=".1"/>
+              <stop offset="100%" stop-color="#E91E63" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M 18,8 L 62,8 L 68,16 L 68,28 L 12,28 L 12,16 Z" fill="#0E0E1C"/>
+          <polygon points="18,8 62,8 60,2 20,2" fill="#1A1A28" stroke="#B8972A" stroke-opacity=".3" stroke-width=".3"/>
+          <path d="M 12,28 L 12,210 Q 12,218 20,220 L 60,220 Q 68,218 68,210 L 68,28 Z" fill="url(#emberBody)" stroke="#E91E63" stroke-opacity=".2" stroke-width=".3"/>
+          <path d="M 12,28 L 12,210 Q 12,218 20,220 L 60,220 Q 68,218 68,210 L 68,28 Z" fill="url(#emberFire)"/>
+          <circle cx="52" cy="110" r="8" fill="#FF6FD8" fill-opacity=".25"/>
+          <circle cx="52" cy="110" r="5" fill="#FF6FD8" fill-opacity=".12"/>
+          <text x="40" y="150" font-family="monospace" font-size="18" fill="none" stroke="#E91E63" stroke-width=".6" stroke-opacity=".45" text-anchor="middle" dominant-baseline="middle">N</text>
+          <text x="40" y="167" font-family="monospace" font-size="6.5" fill="#E91E63" fill-opacity=".5" text-anchor="middle" letter-spacing="3">EMBER</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="p-label">Formula 05 · 50 ML</span>
+        <h3 class="p-name">NANZE EMBER</h3>
+        <p class="p-notes">Spiced amber · Incense · Leather</p>
+        <p class="p-price">€185</p>
+      </div>
+      <button class="btn-add" data-name="NANZE EMBER" data-price="185">Add to Cart</button>
+    </article>
+
+    <!-- ── VERTEX ── -->
+    <article class="product-card reveal d6">
+      <div class="bottle-stage">
+        <div class="bottle-glow gt"></div>
+        <svg class="bottle be" viewBox="0 0 84 228" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="vertexBody" x1=".5" y1="0" x2=".5" y2="1">
+              <stop offset="0%"   stop-color="#1A2A3A"/>
+              <stop offset="100%" stop-color="#0A1A28"/>
+            </linearGradient>
+            <linearGradient id="vertexAccent" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#00A89F" stop-opacity=".3"/>
+              <stop offset="100%" stop-color="#00A89F" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- triangular cap -->
+          <polygon points="42,4 24,18 60,18" fill="#0A0A1C" stroke="#00A89F" stroke-opacity=".35" stroke-width=".4"/>
+          <polygon points="42,4 60,18 64,24 48,18" fill="#151520" stroke="#00A89F" stroke-opacity=".25" stroke-width=".3"/>
+          <rect x="20" y="18" width="44" height="10" fill="#0E0E1C"/>
+          <!-- angular body -->
+          <path d="M 16,30 L 12,218 L 72,218 L 68,30 Z" fill="url(#vertexBody)"/>
+          <path d="M 68,30 L 72,218 L 72,80 Z" fill="url(#vertexAccent)"/>
+          <!-- ridge lines -->
+          <line x1="16" y1="30" x2="12" y2="218" stroke="#00A89F" stroke-opacity=".25" stroke-width=".5"/>
+          <line x1="68" y1="30" x2="72" y2="218" stroke="#00A89F" stroke-opacity=".3" stroke-width=".5"/>
+          <line x1="42" y1="30" x2="42" y2="218" stroke="#00A89F" stroke-opacity=".18" stroke-width=".4"/>
+          <!-- geometric accent -->
+          <polygon points="42,60 38,90 46,90" fill="#00A89F" fill-opacity=".2"/>
+          <text x="42" y="150" font-family="monospace" font-size="18" fill="none" stroke="#00A89F" stroke-width=".65" stroke-opacity=".55" text-anchor="middle" dominant-baseline="middle">N</text>
+          <text x="42" y="167" font-family="monospace" font-size="6.5" fill="#00A89F" fill-opacity=".6" text-anchor="middle" letter-spacing="2.5">VERTEX</text>
+        </svg>
+      </div>
+      <div class="product-info">
+        <span class="p-label">Formula 06 · 50 ML</span>
+        <h3 class="p-name">NANZE VERTEX</h3>
+        <p class="p-notes">Citrus note · Aquatic · Herbal</p>
+        <p class="p-price">€185</p>
+      </div>
+      <button class="btn-add" data-name="NANZE VERTEX" data-price="185">Add to Cart</button>
     </article>
 
   </div>
@@ -738,12 +768,15 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
   <div class="formula-scroll" role="region" aria-label="Ingredient list — scroll horizontally">
     <div class="el-row">
       <div class="el reveal">    <span class="el-n">01</span><span class="el-s">Od</span><span class="el-nm">Oud Resin</span><span class="el-or">Somalia</span></div>
-      <div class="el reveal d1"> <span class="el-n">02</span><span class="el-s">Mk</span><span class="el-nm">White Musk</span><span class="el-or">Synthetic Lab</span></div>
-      <div class="el reveal d2"> <span class="el-n">03</span><span class="el-s">Bg</span><span class="el-nm">Bergamot</span><span class="el-or">Calabria, IT</span></div>
-      <div class="el reveal d3"> <span class="el-n">04</span><span class="el-s">Vt</span><span class="el-nm">Violet Molecule</span><span class="el-or">Paris Lab</span></div>
-      <div class="el reveal d4"> <span class="el-n">05</span><span class="el-s">Ir</span><span class="el-nm">Iris Root</span><span class="el-or">Florence</span></div>
-      <div class="el reveal">    <span class="el-n">06</span><span class="el-s">Sm</span><span class="el-nm">Smoked Mineral</span><span class="el-or">Iceland</span></div>
-      <div class="el reveal d1"> <span class="el-n">07</span><span class="el-s">Rw</span><span class="el-nm">Rainwater</span><span class="el-or">Synthetic</span></div>
+      <div class="el reveal d1"> <span class="el-n">02</span><span class="el-s">Mk</span><span class="el-nm">White Musk</span><span class="el-or">Synthetic</span></div>
+      <div class="el reveal d2"> <span class="el-n">03</span><span class="el-s">Bg</span><span class="el-nm">Bergamot</span><span class="el-or">Calabria</span></div>
+      <div class="el reveal d3"> <span class="el-n">04</span><span class="el-s">Vt</span><span class="el-nm">Violet</span><span class="el-or">Paris Lab</span></div>
+      <div class="el reveal d4"> <span class="el-n">05</span><span class="el-s">Sd</span><span class="el-nm">Sandalwood</span><span class="el-or">India</span></div>
+      <div class="el reveal d5"> <span class="el-n">06</span><span class="el-s">Pt</span><span class="el-nm">Patchouli</span><span class="el-or">Indonesia</span></div>
+      <div class="el reveal d1"> <span class="el-n">07</span><span class="el-s">Ic</span><span class="el-nm">Incense</span><span class="el-or">Synthetic</span></div>
+      <div class="el reveal d2"> <span class="el-n">08</span><span class="el-s">Cs</span><span class="el-nm">Citrus Oil</span><span class="el-or">Sicily</span></div>
+      <div class="el reveal d3"> <span class="el-n">09</span><span class="el-s">Aq</span><span class="el-nm">Aquatic</span><span class="el-or">Molecular</span></div>
+      <div class="el reveal d4"> <span class="el-n">10</span><span class="el-s">Hb</span><span class="el-nm">Herbal Note</span><span class="el-or">Provence</span></div>
     </div>
   </div>
 </section>
@@ -800,7 +833,7 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* chromatic aberration on manifesto headline */
+  /* chromatic aberration */
   const manifesto = document.getElementById('manifesto');
   const mhl = manifesto.querySelector('.manifesto-hl');
   let raf = false;
@@ -809,9 +842,9 @@ footer { padding: 64px 48px 48px; background: var(--bg); }
       requestAnimationFrame(() => {
         const r = manifesto.getBoundingClientRect();
         const p = Math.max(0, Math.min(1, -r.top / (window.innerHeight * .6)));
-        const o = p * 4;
-        mhl.style.textShadow = o > .3
-          ? `${o}px 0 rgba(255,60,0,.45), -${o}px 0 rgba(0,100,255,.45)` : 'none';
+        const o = p * 3;
+        mhl.style.textShadow = o > .2
+          ? `${o}px 0 rgba(153,0,0,.35), -${o}px 0 rgba(0,100,200,.35)` : 'none';
         raf = false;
       });
       raf = true;
